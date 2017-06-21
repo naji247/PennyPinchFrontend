@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
-
+import FBLoginButton from "./FBLoginButton";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -27,6 +27,7 @@ const LoginScreen = ({ navigation }) =>
       onPress={() => navigation.dispatch({ type: "Login" })}
       title="Log in"
     />
+    <FBLoginButton />
   </View>;
 
 LoginScreen.propTypes = {
