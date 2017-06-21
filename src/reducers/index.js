@@ -1,30 +1,23 @@
 import { combineReducers } from "redux";
 import { NavigationActions } from "react-navigation";
-
+import * as types from "../actions/actionTypes";
 import { AppNavigator } from "../navigators/AppNavigator";
 
 // Start with two routes: The Main screen, with the Login screen on top.
-const firstAction = AppNavigator.router.getActionForPathAndParams("Main");
-const tempNavState = AppNavigator.router.getStateForAction(firstAction);
-const secondAction = AppNavigator.router.getActionForPathAndParams("Login");
-const initialNavState = AppNavigator.router.getStateForAction(
-  secondAction,
-  tempNavState
-);
+const firstAction = AppNavigator.router.getActionForPathAndParams("Login");
+const initialNavState = AppNavigator.router.getStateForAction(firstAction);
 
 function nav(state = initialNavState, action) {
   let nextState;
   switch (action.type) {
-    case "Login":
+    case types.LOGIN_SUCCESS:
       nextState = AppNavigator.router.getStateForAction(
-        NavigationActions.back(),
-        state
+        AppNavigator.router.getActionForPathAndParams("Main")
       );
       break;
-    case "Logout":
+    case types.LOGOUT_SUCCESS:
       nextState = AppNavigator.router.getStateForAction(
-        NavigationActions.navigate({ routeName: "Login" }),
-        state
+        NavigationActions.navigate({ routeName: "Login" })
       );
       break;
     default:
@@ -36,14 +29,14 @@ function nav(state = initialNavState, action) {
   return nextState || state;
 }
 
-const initialAuthState = { isLoggedIn: false };
+const initialAuthState = { isLoggedIn: false, user: null };
 
 function auth(state = initialAuthState, action) {
   switch (action.type) {
-    case "Login":
-      return { ...state, isLoggedIn: true };
-    case "Logout":
-      return { ...state, isLoggedIn: false };
+    case types.LOGIN_SUCCESS:
+      return { ...state, isLoggedIn: true, user: action.user };
+    case types.LOGOUT_SUCCESS:
+      return { ...state, isLoggedIn: false, user: null };
     default:
       return state;
   }

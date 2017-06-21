@@ -2,14 +2,7 @@ import React, { PropTypes } from "react";
 import { connect } from "react-redux";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { NavigationActions } from "react-navigation";
-
-const styles = StyleSheet.create({
-  welcome: {
-    fontSize: 20,
-    textAlign: "center",
-    margin: 10
-  }
-});
+import * as styles from "./LoginStatusMessage.css";
 
 const LoginStatusMessage = ({ isLoggedIn, dispatch }) => {
   if (!isLoggedIn) {
