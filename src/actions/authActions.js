@@ -1,6 +1,7 @@
 import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from "./actionTypes";
 import Expo from "expo";
 const getFBToken = Expo.Facebook.logInWithReadPermissionsAsync;
+const fbURL = "https://graph.facebook.com/";
 
 const loginAction = user => {
   return {
@@ -21,9 +22,7 @@ async function login() {
   });
   if (type === "success") {
     // Get the user's name using Facebook's Graph API
-    const response = await fetch(
-      `https://graph.facebook.com/me?access_token=${token}`
-    );
+    const response = await fetch(`${fbURL}me?access_token=${token}`);
     user = await response.json();
     user.token = token;
     return loginAction(user);
@@ -36,7 +35,7 @@ async function initializeAuth(user) {
     return logoutAction();
   }
   const response = await fetch(
-    `https://graph.facebook.com/debug_token?input_token=${user.token}&access_token=${user.token}`
+    `${fbURL}debug_token?input_token=${user.token}&access_token=${user.token}`
   );
   tokenInfo = await response.json();
 
