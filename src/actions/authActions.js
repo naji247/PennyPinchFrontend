@@ -25,6 +25,7 @@ async function login() {
       `https://graph.facebook.com/me?access_token=${token}`
     );
     user = await response.json();
+    user.token = token;
     return loginAction(user);
   }
 }

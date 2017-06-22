@@ -1,17 +1,37 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { View, Text } from "react-native";
-import { applyMiddleware, createStore } from "redux";
+import { View, Text, AsyncStorage } from "react-native";
+import { compose, applyMiddleware, createStore } from "redux";
 import logger from "redux-logger";
+import { persistStore, autoRehydrate } from "redux-persist";
 
 import AppReducer from "./src/reducers";
 import AppWithNavigationState from "./src/navigators/AppNavigator";
 
+const store = createStore(
+  AppReducer,
+  undefined,
+  compose(applyMiddleware(logger), autoRehydrate())
+);
+
 export default class App extends React.Component {
-  store = createStore(AppReducer, applyMiddleware(logger));
+  constructor() {
+    super();
+    this.state = { rehydrated: false };
+  }
+
+  componentWillMount() {
+    persistStore(store, { storage: AsyncStorage }, () => {
+      this.setState({ rehydrated: true });
+    });
+  }
+
   render() {
+    if (!this.state.rehydrated) {
+      return <Text>Loading...</Text>;
+    }
     return (
-      <Provider store={this.store}>
+      <Provider store={store}>
         <AppWithNavigationState />
       </Provider>
     );
