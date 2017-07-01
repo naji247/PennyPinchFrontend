@@ -42,9 +42,38 @@ function auth(state = initialAuthState, action) {
   }
 }
 
+const initialTransactionState = {
+  transaction: {
+    amount: "0",
+    isSpending: true,
+    isLoading: false,
+    description: "pizza"
+  }
+};
+
+function trans(state = initialTransactionState, action) {
+  switch (action.type) {
+    case types.UPDATE_TRANSACTION:
+      return { ...state, transaction: action.transaction };
+    case types.SUBMIT_TRANSACTION_LOADING:
+      return {
+        ...state,
+        transaction: { ...state.transaction, isLoading: true }
+      };
+    case types.SUBMIT_TRANSACTION_SUCCESS:
+      return {
+        ...state,
+        transaction: { ...state.transaction, isLoading: false }
+      };
+    default:
+      return state;
+  }
+}
+
 const AppReducer = combineReducers({
   nav,
-  auth
+  auth,
+  trans
 });
 
 export default AppReducer;
