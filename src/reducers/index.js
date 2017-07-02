@@ -29,14 +29,21 @@ function nav(state = initialNavState, action) {
   return nextState || state;
 }
 
-const initialAuthState = { isLoggedIn: false, user: null };
+const initialAuthState = { isLoggedIn: false, user: null, isLoading: false };
 
 function auth(state = initialAuthState, action) {
   switch (action.type) {
+    case types.LOGIN_LOADING:
+      return { ...state, isLoading: true };
     case types.LOGIN_SUCCESS:
-      return { ...state, isLoggedIn: true, user: action.user };
+      return {
+        ...state,
+        isLoggedIn: true,
+        user: action.user,
+        isLoading: false
+      };
     case types.LOGOUT_SUCCESS:
-      return { ...state, isLoggedIn: false, user: null };
+      return { ...state, isLoggedIn: false, user: null, isLoading: false };
     default:
       return state;
   }
@@ -44,7 +51,7 @@ function auth(state = initialAuthState, action) {
 
 const initialTransactionState = {
   transaction: {
-    amount: "0",
+    amount: "10",
     isSpending: true,
     isLoading: false,
     description: "pizza"
