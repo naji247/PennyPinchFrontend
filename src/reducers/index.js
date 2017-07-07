@@ -42,6 +42,20 @@ function auth(state = initialAuthState, action) {
         user: action.user,
         isLoading: false
       };
+    case types.LOGIN_CANCEL:
+      return {
+        ...state,
+        isLoggedIn: false,
+        user: null,
+        isLoading: false
+      };
+    case types.LOGIN_FAILURE:
+      return {
+        ...state,
+        isLoggedIn: false,
+        user: null,
+        isLoading: false
+      };
     case types.LOGOUT_SUCCESS:
       return { ...state, isLoggedIn: false, user: null, isLoading: false };
     default:

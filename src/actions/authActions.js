@@ -1,4 +1,10 @@
-import { LOGIN_SUCCESS, LOGIN_LOADING, LOGOUT_SUCCESS } from "./actionTypes";
+import {
+  LOGIN_SUCCESS,
+  LOGIN_LOADING,
+  LOGIN_FAILURE,
+  LOGOUT_SUCCESS,
+  LOGIN_CANCEL
+} from "./actionTypes";
 import Expo from "expo";
 const getFBToken = Expo.Facebook.logInWithReadPermissionsAsync;
 const fbURL = "https://graph.facebook.com/";
@@ -10,6 +16,20 @@ const loginAction = user => {
     user: user
   };
 };
+
+const loginFailureAction = err => {
+  return {
+    type: LOGIN_FAILURE,
+    error: err
+  };
+};
+
+const loginCancelAction = () => {
+  return {
+    type: LOGIN_CANCEL
+  };
+};
+
 const loginLoadingAction = () => {
   return {
     type: LOGIN_LOADING
@@ -21,30 +41,51 @@ const logoutAction = () => {
   };
 };
 
-async function getLongToken(user) {
-  const longTokenResponse = await fetch(`${serverURL}auth/long_token`, {
-    method: "GET",
-    headers: {
-      fbtoken: user.token,
-      fbid: user.id
-    }
-  });
+async function loginUser(user) {
+  const headers = {
+    fbtoken: user.token,
+    fbid: user.id,
+    "Content-Type": "application/json"
+  };
+
+  const body = {
+    email: user.email,
+    first_name: user.first_name,
+    last_name: user.last_name
+  };
+
+  var config = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(body)
+  };
+
+  const longTokenResponse = await fetch(`${serverURL}auth/login`, config);
   const longToken = (await longTokenResponse.json()).access_token;
   return longToken;
 }
 
 async function login(dispatch) {
   dispatch(loginLoadingAction());
-  const { type, token } = await getFBToken("235578963603256", {
-    permissions: ["public_profile"]
-  });
-  if (type === "success") {
-    // Get the user's name using Facebook's Graph API
-    const response = await fetch(`${fbURL}me?access_token=${token}`);
-    const user = await response.json();
-    user.token = token;
-    user.token = await getLongToken(user);
-    dispatch(loginAction(user));
+  try {
+    const { type, token } = await getFBToken("235578963603256", {
+      permissions: ["public_profile", "email"]
+    });
+    if (type === "success") {
+      // Get the user's name using Facebook's Graph API
+      const response = await fetch(
+        `${fbURL}me?access_token=${token}&fields=email,first_name,last_name`
+      );
+      const user = await response.json();
+      user.token = token;
+      user.token = await loginUser(user);
+      dispatch(loginAction(user));
+    } else if (type === "cancel") {
+      dispatch(loginCancelAction());
+    }
+  } catch (err) {
+    alert(err);
+    dispatch(loginFailureAction(err));
   }
 }
 
