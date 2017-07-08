@@ -7,13 +7,14 @@ import {
   View,
   TouchableHighlight
 } from "react-native";
+import { LoadingComponent } from "../UtilityComponents/LoadingComponents";
 import { connect } from "react-redux";
 import { login, logout } from "../../actions/authActions";
 import * as styles from "./FBLoginButton.css";
 
 const FBLoginButton = ({ style, login, logout, user, isLoading }) => {
   return isLoading
-    ? <Text>Loading...</Text>
+    ? <LoadingComponent size="large" />
     : <View style={style}>
         <TouchableHighlight
           style={styles.container}
