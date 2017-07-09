@@ -4,15 +4,13 @@ import { connect } from "react-redux";
 import { addNavigationHelpers, StackNavigator } from "react-navigation";
 
 import LoginScreen from "../components/LoginScreen/LoginScreen";
-import MainScreen from "../components/MainScreen/MainScreen";
+import MainNavigator from "./MainNavigator";
 import NewTransactionScreen from "../components/NewTransactionScreen/NewTransactionScreen";
 import HistoryScreen from "../components/HistoryScreen/HistoryScreen";
 
 export const AppNavigator = StackNavigator({
   Login: { screen: LoginScreen },
-  Main: { screen: MainScreen },
-  CreateTransaction: { screen: NewTransactionScreen },
-  TransactionHistory: { screen: HistoryScreen }
+  Main: { screen: MainNavigator }
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) =>
