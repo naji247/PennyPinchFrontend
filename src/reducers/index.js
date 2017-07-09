@@ -2,9 +2,10 @@ import { combineReducers } from "redux";
 import { NavigationActions } from "react-navigation";
 import * as types from "../actions/actionTypes";
 import { AppNavigator } from "../navigators/AppNavigator";
+import { MainNavigator } from "../navigators/MainNavigator";
 
 // Start with two routes: The Main screen, with the Login screen on top.
-const firstAction = AppNavigator.router.getActionForPathAndParams("Login");
+const firstAction = NavigationActions.navigate({ routeName: "Login" });
 const initialNavState = AppNavigator.router.getStateForAction(firstAction);
 
 function nav(state = initialNavState, action) {
@@ -12,7 +13,7 @@ function nav(state = initialNavState, action) {
   switch (action.type) {
     case types.LOGIN_SUCCESS:
       nextState = AppNavigator.router.getStateForAction(
-        AppNavigator.router.getActionForPathAndParams("Main")
+        NavigationActions.navigate({ routeName: "TransactionHistory" })
       );
       break;
     case types.LOGOUT_SUCCESS:
