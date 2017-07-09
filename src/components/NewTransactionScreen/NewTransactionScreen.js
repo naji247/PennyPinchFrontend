@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import { connect } from "react-redux";
 import * as styles from "./NewTransactionScreen.css";
+import { LoadingComponent } from "../UtilityComponents/LoadingComponents";
 import {
   updateTransactionAction,
   submitTransaction
@@ -20,7 +21,7 @@ const NewTransactionScreen = ({
   submitTransaction
 }) => {
   return transaction.isLoading
-    ? <Text>Loading</Text>
+    ? <LoadingComponent size="large" />
     : <View style={styles.container}>
         <TransactionAmountInput
           transaction={transaction}

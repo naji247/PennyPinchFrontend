@@ -2,9 +2,9 @@ import React, { PropTypes } from "react";
 import { connect } from "react-redux";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { NavigationActions } from "react-navigation";
-import * as styles from "./LoginStatusMessage.css";
+import * as styles from "./UserOptions.css";
 
-const LoginStatusMessage = ({ isLoggedIn, dispatch }) => {
+const UserOptions = ({ isLoggedIn, dispatch }) => {
   if (!isLoggedIn) {
     return <Text>Please log in</Text>;
   }
@@ -15,14 +15,23 @@ const LoginStatusMessage = ({ isLoggedIn, dispatch }) => {
       </Text>
       <Button
         onPress={() =>
-          dispatch(NavigationActions.navigate({ routeName: "Profile" }))}
+          dispatch(
+            NavigationActions.navigate({ routeName: "CreateTransaction" })
+          )}
         title="Create a Transaction"
+      />
+      <Button
+        onPress={() =>
+          dispatch(
+            NavigationActions.navigate({ routeName: "TransactionHistory" })
+          )}
+        title="History"
       />
     </View>
   );
 };
 
-LoginStatusMessage.propTypes = {
+UserOptions.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired
 };
@@ -31,4 +40,4 @@ const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn
 });
 
-export default connect(mapStateToProps)(LoginStatusMessage);
+export default connect(mapStateToProps)(UserOptions);

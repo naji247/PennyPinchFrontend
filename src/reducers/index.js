@@ -91,10 +91,28 @@ function trans(state = initialTransactionState, action) {
   }
 }
 
+const initialHistoryState = {
+  transactions: [],
+  isLoading: false
+};
+function hist(state = initialHistoryState, action) {
+  switch (action.type) {
+    case types.HISTORY_TRANSACTION_LOADING:
+      return { ...state, isLoading: true };
+    case types.HISTORY_TRANSACTION_SUCCESS:
+      return { ...state, isLoading: false, transactions: action.transactions };
+    case types.HISTORY_TRANSACTION_FAILURE: {
+      return { ...state, isLoading: false, transactions: [] };
+    }
+    default:
+      return state;
+  }
+}
 const AppReducer = combineReducers({
   nav,
   auth,
-  trans
+  trans,
+  hist
 });
 
 export default AppReducer;

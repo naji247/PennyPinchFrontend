@@ -7,6 +7,7 @@ import { persistStore, autoRehydrate } from "redux-persist";
 import { initializeAuth } from "./src/actions/authActions";
 import AppReducer from "./src/reducers";
 import AppWithNavigationState from "./src/navigators/AppNavigator";
+import { LoadingComponent } from "./src/components/UtilityComponents/LoadingComponents";
 
 const store = createStore(
   AppReducer,
@@ -31,7 +32,7 @@ export default class App extends React.Component {
 
   render() {
     if (!this.state.rehydrated) {
-      return <Text>Loading...</Text>;
+      return <LoadingComponent size="large" />;
     }
     return (
       <Provider store={store}>
