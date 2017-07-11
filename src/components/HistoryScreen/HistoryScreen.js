@@ -16,8 +16,16 @@ class HistoryScreen extends Component {
   });
 
   componentDidMount() {
-    const { user, getHistory } = this.props;
+    const { user, getHistory, nav } = this.props;
     getHistory(user);
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    // return a boolean value
+    const { user, history, getHistory, nav } = this.props;
+    if (history.isDirty && !history.isLoading) {
+      getHistory(user);
+    }
   }
 
   render() {
@@ -25,15 +33,15 @@ class HistoryScreen extends Component {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-    this.state = {
-      dataSource: ds.cloneWithRows(transactions)
-    };
     return isLoading
       ? <LoadingComponent size="large" />
       : <ListView
           contentContainerStyle={styles.container}
-          dataSource={this.state.dataSource}
+          dataSource={ds.cloneWithRows(transactions)}
           renderRow={rowData => <TransactionRow rowData={rowData} />}
+          pageSize={50}
+          initialListSize={50}
+          enableEmptySections={true}
         />;
   }
 }
@@ -55,7 +63,8 @@ const TransactionRow = ({ rowData }) =>
 
 const mapStateToProps = state => ({
   history: state.hist,
-  user: state.auth.user
+  user: state.auth.user,
+  nav: state.nav
 });
 
 const mapDispatchToProps = dispatch => ({

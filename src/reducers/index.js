@@ -94,17 +94,24 @@ function trans(state = initialTransactionState, action) {
 
 const initialHistoryState = {
   transactions: [],
-  isLoading: false
+  isLoading: false,
+  isDirty: false
 };
 function hist(state = initialHistoryState, action) {
   switch (action.type) {
     case types.HISTORY_TRANSACTION_LOADING:
-      return { ...state, isLoading: true };
+      return { ...state, isDirty: false, isLoading: true };
     case types.HISTORY_TRANSACTION_SUCCESS:
-      return { ...state, isLoading: false, transactions: action.transactions };
-    case types.HISTORY_TRANSACTION_FAILURE: {
-      return { ...state, isLoading: false, transactions: [] };
-    }
+      return {
+        ...state,
+        isLoading: false,
+        isDirty: false,
+        transactions: action.transactions
+      };
+    case types.HISTORY_TRANSACTION_FAILURE:
+      return { ...state, isLoading: false, isDirty: false, transactions: [] };
+    case types.SUBMIT_TRANSACTION_SUCCESS:
+      return { ...state, isDirty: true, transactions: [] };
     default:
       return state;
   }
