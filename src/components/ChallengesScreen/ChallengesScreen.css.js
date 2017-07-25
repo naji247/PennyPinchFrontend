@@ -2,10 +2,7 @@ import React, { StyleSheet } from "react-native";
 
 module.exports = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 12,
-    flexDirection: "column",
-    alignItems: "flex-start"
+    flex: 1
   },
   listView: {
     padding: 12,
@@ -17,7 +14,7 @@ module.exports = StyleSheet.create({
     textAlign: "center",
     margin: 10
   },
-  transactionRow: {
+  challengeRow: {
     flexDirection: "row"
   },
   textContainer: {

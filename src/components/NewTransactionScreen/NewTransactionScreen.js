@@ -18,7 +18,8 @@ const NewTransactionScreen = ({
   transaction,
   user,
   updateTransaction,
-  submitTransaction
+  submitTransaction,
+  navigation
 }) => {
   return transaction.isLoading
     ? <LoadingComponent size="large" />
@@ -39,6 +40,7 @@ const NewTransactionScreen = ({
           transaction={transaction}
           user={user}
           submitTransaction={submitTransaction}
+          navigation={navigation}
         />
       </View>;
 };
@@ -56,8 +58,8 @@ const mapDispatchToProps = dispatch => ({
   updateTransaction: transaction => {
     dispatch(updateTransactionAction(transaction));
   },
-  submitTransaction: async (user, transaction) => {
-    submitTransaction(dispatch, user, transaction);
+  submitTransaction: async (user, transaction, navigation) => {
+    submitTransaction(dispatch, user, transaction, navigation);
   }
 });
 

@@ -26,6 +26,7 @@ class HistoryScreen extends Component {
     if (history.isDirty && !history.isLoading) {
       getHistory(user);
     }
+    return true;
   }
 
   render() {
@@ -33,10 +34,11 @@ class HistoryScreen extends Component {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
+    console.log("HELLO");
     return isLoading
       ? <LoadingComponent size="large" />
       : <ListView
-          contentContainerStyle={styles.container}
+          contentContainerStyle={styles.listView}
           dataSource={ds.cloneWithRows(transactions)}
           renderRow={rowData => <TransactionRow rowData={rowData} />}
           pageSize={50}

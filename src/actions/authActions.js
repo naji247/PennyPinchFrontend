@@ -69,12 +69,12 @@ async function login(dispatch) {
   dispatch(loginLoadingAction());
   try {
     const { type, token } = await getFBToken("235578963603256", {
-      permissions: ["public_profile", "email"]
+      permissions: ["public_profile", "email", "user_friends"]
     });
     if (type === "success") {
       // Get the user's name using Facebook's Graph API
       const response = await fetch(
-        `${fbURL}me?access_token=${token}&fields=email,first_name,last_name`
+        `${fbURL}me?access_token=${token}&fields=email,first_name,last_name,friends{name,id}`
       );
       const user = await response.json();
       user.token = token;
@@ -91,7 +91,7 @@ async function login(dispatch) {
 
 async function initializeAuth(user) {
   // Case 1: No prior logged in user
-  if (!user) {
+  if (!user || !user.token) {
     return logoutAction();
   }
   const response = await fetch(

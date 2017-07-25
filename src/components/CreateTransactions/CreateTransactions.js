@@ -23,7 +23,6 @@ const TransactionDescriptionInput = ({ transaction, updateTransaction }) =>
       style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
       onChangeText={desc =>
         updateTransaction({ ...transaction, description: desc })}
-      keyboardType="numeric"
       value={transaction.description}
     />
   </View>;
@@ -42,10 +41,15 @@ const TransactionTypeSelect = ({ transaction, updateTransaction }) =>
     />
   </View>;
 
-const TransactionSubmit = ({ transaction, user, submitTransaction }) =>
+const TransactionSubmit = ({
+  transaction,
+  user,
+  submitTransaction,
+  navigation
+}) =>
   <View style={styles.selectTypeContainer}>
     <Button
-      onPress={() => submitTransaction(user, transaction)}
+      onPress={() => submitTransaction(user, transaction, navigation)}
       title={"Save!"}
     />
   </View>;

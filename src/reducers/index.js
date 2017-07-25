@@ -116,11 +116,76 @@ function hist(state = initialHistoryState, action) {
       return state;
   }
 }
+
+const initialChallengesState = {
+  challenges: [],
+  isLoading: false,
+  isDirty: false // Except yo girl
+};
+
+function chal(state = initialChallengesState, action) {
+  switch (action.type) {
+    case types.CHALLENGES_LOADING:
+      return {
+        ...state,
+        isLoading: true,
+        isDirty: false
+      };
+
+    case types.CHALLENGES_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        challenges: action.challenges
+      };
+
+    case types.SUBMIT_CHALLENGE_SUCCESS:
+      return { ...state, isDirty: true, challenges: [] };
+
+    default:
+      return state;
+  }
+}
+
+const initialCreateChallengeState = {
+  challenge: {
+    name: "",
+    users: [],
+    goal: "0",
+    start_date: Date.now().toString(),
+    end_date: Date.now().toString()
+  },
+  isLoading: false
+};
+function newChal(state = initialCreateChallengeState, action) {
+  switch (action.type) {
+    case types.SELECT_FRIEND:
+      return {
+        ...state,
+        challenge: { ...state.challenge, users: action.selectedFriends }
+      };
+
+    case types.UPDATE_NEW_CHALLENGE:
+      return {
+        ...state,
+        challenge: action.challenge
+      };
+    case types.SUBMIT_CHALLENGE_SUCCESS:
+      return { ...state, isLoading: false };
+    case types.SUBMIT_CHALLENGE_LOADING:
+      return { ...state, isLoading: true };
+    default:
+      return state;
+  }
+}
+
 const AppReducer = combineReducers({
   nav,
   auth,
   trans,
-  hist
+  hist,
+  newChal,
+  chal
 });
 
 export default AppReducer;

@@ -1,5 +1,6 @@
 import * as types from "./actionTypes";
 import * as api from "../helpers/api";
+import { NavigationActions } from "react-navigation";
 
 const updateTransactionAction = transaction => {
   return {
@@ -15,7 +16,7 @@ const submitTransactionSuccess = () => {
   return { type: types.SUBMIT_TRANSACTION_SUCCESS };
 };
 
-const submitTransaction = (dispatch, user, transaction) => {
+const submitTransaction = (dispatch, user, transaction, navigation) => {
   dispatch(submitTransactionLoading());
 
   const headers = {
@@ -44,6 +45,19 @@ const submitTransaction = (dispatch, user, transaction) => {
     .then(function(body) {
       if (body.error) throw body.error;
       dispatch(submitTransactionSuccess());
+
+      const resetAction = {
+        type: NavigationActions.NAVIGATE,
+        routeName: "TransactionHistory",
+        action: {
+          type: NavigationActions.RESET,
+          index: 0,
+          routeName: "ChallengesScreen"
+        }
+      };
+
+      console.log(navigation);
+      navigation.dispatch(resetAction);
     })
     .catch(err => {
       alert(err);

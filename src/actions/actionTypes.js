@@ -11,3 +11,11 @@ exports.HISTORY_TRANSACTION_FAILURE = "TRANSACTION: History failed to load";
 exports.HISTORY_TRANSACTION_LOADING = "TRANSACTION: History is loading";
 exports.HISTORY_TRANSACTION_SUCCESS =
   "TRANSACTION: History successfully loaded";
+
+exports.SELECT_FRIEND = "CHALLENGE: Selected friend for new challenge";
+exports.UPDATE_NEW_CHALLENGE = "CHALLENGE: Updating challenge";
+exports.CHALLENGES_LOADING = "CHALLENGE: Loading user challenges";
+exports.CHALLENGES_SUCCESS = "CHALLENGE: Successfully loaded user challenges";
+exports.CHALLENGES_FAILURE = "CHALLENGE: Successfully loaded user challenges";
+exports.SUBMIT_CHALLENGE_LOADING = "CHALLENGE: Send challenge for submit";
+exports.SUBMIT_CHALLENGE_SUCCESS = "CHALLENGE: Successfully submited";
