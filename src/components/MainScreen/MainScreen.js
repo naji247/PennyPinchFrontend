@@ -6,7 +6,6 @@ import * as styles from "./MainScreen.css";
 
 const MainScreen = () =>
   <View style={styles.container}>
-    <UserOptions />
     <FBLoginButton style={styles.fbLogin} />
   </View>;
 

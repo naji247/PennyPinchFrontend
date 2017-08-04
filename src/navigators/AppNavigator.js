@@ -7,10 +7,12 @@ import LoginScreen from "../components/LoginScreen/LoginScreen";
 import MainNavigator from "./MainNavigator";
 import NewTransactionScreen from "../components/NewTransactionScreen/NewTransactionScreen";
 import HistoryScreen from "../components/HistoryScreen/HistoryScreen";
+import MainScreen from "../components/MainScreen/MainScreen";
 
 export const AppNavigator = StackNavigator({
   Login: { screen: LoginScreen },
-  Main: { screen: MainNavigator }
+  Main: { screen: MainNavigator },
+  Settings: { screen: MainScreen }
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) =>

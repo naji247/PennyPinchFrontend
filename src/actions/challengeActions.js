@@ -105,9 +105,51 @@ const submitChallenge = (dispatch, user, challenge, navigation) => {
     });
 };
 
+function challengeShowLoading() {
+  return {
+    type: types.CHALLENGE_SHOW_LOADING
+  };
+}
+
+function challengeShowSuccess(challenge) {
+  return {
+    type: types.CHALLENGE_SHOW_SUCCESS,
+    challenge: challenge
+  };
+}
+
+function showChallenge(dispatch, challenge) {
+  dispatch(challengeShowLoading());
+  var challenge = {
+    challenge_id: "ba0ad9b5-2a13-4ac1-a848-6bcdad9196ef",
+    start_date: "2017-07-01T04:00:00.000Z",
+    end_date: "2017-08-01T04:00:00.000Z",
+    name: "Special",
+    challenge_type: "sprint",
+    created_at: "2017-07-17T12:30:27.917Z",
+    goal: 100,
+    participants: [
+      {
+        fbid: "1555981821079083",
+        first_name: "Derek",
+        last_name: "Lou",
+        spent: 50
+      },
+      {
+        fbid: "1555981821079083",
+        first_name: "Derek",
+        last_name: "Lou",
+        spent: 50
+      }
+    ]
+  };
+  dispatch(challengeShowSuccess(challenge));
+}
+
 module.exports = {
   selectFriendAction,
   updateChallengeAction,
+  showChallenge,
   getChallenges,
   submitChallenge
 };

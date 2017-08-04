@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import React, { Component } from "react";
+import { Button, StyleSheet, Text, View, TextInput } from "react-native";
 import { connect } from "react-redux";
 import * as styles from "./NewTransactionScreen.css";
 import { LoadingComponent } from "../UtilityComponents/LoadingComponents";
@@ -14,40 +14,50 @@ import {
   TransactionDescriptionInput
 } from "../CreateTransactions/CreateTransactions";
 
-const NewTransactionScreen = ({
-  transaction,
-  user,
-  updateTransaction,
-  submitTransaction,
-  navigation
-}) => {
-  return transaction.isLoading
-    ? <LoadingComponent size="large" />
-    : <View style={styles.container}>
-        <TransactionAmountInput
-          transaction={transaction}
-          updateTransaction={updateTransaction}
-        />
-        <TransactionDescriptionInput
-          transaction={transaction}
-          updateTransaction={updateTransaction}
-        />
-        <TransactionTypeSelect
-          transaction={transaction}
-          updateTransaction={updateTransaction}
-        />
-        <TransactionSubmit
-          transaction={transaction}
-          user={user}
-          submitTransaction={submitTransaction}
-          navigation={navigation}
-        />
-      </View>;
-};
+class NewTransactionScreen extends Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: "Add Transaction",
+      headerLeft: (
+        <Button title="Me" onPress={() => navigation.navigate("Settings")} />
+      )
+    };
+  };
 
-NewTransactionScreen.navigationOptions = {
-  title: "Add Transaction"
-};
+  render() {
+    const {
+      transaction,
+      user,
+      updateTransaction,
+      submitTransaction,
+      navigate,
+      navigation
+    } = this.props;
+
+    return transaction.isLoading
+      ? <LoadingComponent size="large" />
+      : <View style={styles.container}>
+          <TransactionAmountInput
+            transaction={transaction}
+            updateTransaction={updateTransaction}
+          />
+          <TransactionDescriptionInput
+            transaction={transaction}
+            updateTransaction={updateTransaction}
+          />
+          <TransactionTypeSelect
+            transaction={transaction}
+            updateTransaction={updateTransaction}
+          />
+          <TransactionSubmit
+            transaction={transaction}
+            user={user}
+            submitTransaction={submitTransaction}
+            navigation={navigation}
+          />
+        </View>;
+  }
+}
 
 const mapStateToProps = state => ({
   transaction: state.trans.transaction,

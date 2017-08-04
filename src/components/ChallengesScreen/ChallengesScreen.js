@@ -1,15 +1,25 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ListView, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ListView,
+  Button,
+  TouchableHighlight
+} from "react-native";
 import { connect } from "react-redux";
 import * as styles from "./ChallengesScreen.css";
 import { LoadingComponent } from "../UtilityComponents/LoadingComponents";
-import { getChallenges } from "../../actions/challengeActions";
+import { getChallenges, showChallenge } from "../../actions/challengeActions";
 import moment from "moment";
 
 class ChallengesScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Challenges",
+      headerLeft: (
+        <Button title="Me" onPress={() => navigation.navigate("Settings")} />
+      ),
       headerRight: (
         <Button
           title="+"
@@ -36,7 +46,7 @@ class ChallengesScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const { isLoading, challenges } = this.props;
+    const { isLoading, challenges, challengeSelect } = this.props;
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
@@ -45,7 +55,12 @@ class ChallengesScreen extends Component {
       : <ListView
           contentContainerStyle={styles.listView}
           dataSource={ds.cloneWithRows(challenges)}
-          renderRow={rowData => <ChallengeRow rowData={rowData} />}
+          renderRow={rowData =>
+            <ChallengeRow
+              challenge={rowData}
+              challengeSelect={challengeSelect}
+              navigate={navigate}
+            />}
           pageSize={50}
           initialListSize={50}
           enableEmptySections={true}
@@ -53,18 +68,33 @@ class ChallengesScreen extends Component {
   }
 }
 
-const ChallengeRow = ({ rowData }) =>
-  <View style={styles.challengeRow}>
-    <View style={styles.textContainer}>
-      <Text style={styles.date}>
-        {rowData.name}
-      </Text>
-      <Text style={styles.date}>
-        {rowData.users.length}{" "}
-        {rowData.users.length == 1 ? "Competitor" : "Competitors"}
-      </Text>
-    </View>
-  </View>;
+class ChallengeRow extends Component {
+  handleChallengeClick() {
+    const { challenge, challengeSelect, navigate } = this.props;
+    navigate("ChallengeShowScreen", { name: challenge.name });
+    challengeSelect(challenge);
+  }
+
+  render() {
+    const { challenge } = this.props;
+    return (
+      <TouchableHighlight
+        onPress={() => this.handleChallengeClick()}
+        style={styles.challengeRow}
+      >
+        <View style={styles.textContainer}>
+          <Text style={styles.date}>
+            {challenge.name}
+          </Text>
+          <Text style={styles.date}>
+            {challenge.users.length}{" "}
+            {challenge.users.length == 1 ? "Competitor" : "Competitors"}
+          </Text>
+        </View>
+      </TouchableHighlight>
+    );
+  }
+}
 
 const mapStateToProps = state => ({
   user: state.auth.user,
@@ -75,6 +105,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getChallenges: user => {
     getChallenges(dispatch, user);
+  },
+  challengeSelect: challenge => {
+    showChallenge(dispatch, challenge);
   }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ChallengesScreen);

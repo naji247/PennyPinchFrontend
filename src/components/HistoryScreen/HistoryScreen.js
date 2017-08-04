@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ListView } from "react-native";
+import { StyleSheet, Text, View, ListView, Button } from "react-native";
 import { connect } from "react-redux";
 import * as styles from "./HistoryScreen.css";
 import { LoadingComponent } from "../UtilityComponents/LoadingComponents";
@@ -11,9 +11,14 @@ class HistoryScreen extends Component {
     super();
   }
 
-  static navigationOptions = ({ navigation }) => ({
-    title: "History"
-  });
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: "History",
+      headerLeft: (
+        <Button title="Me" onPress={() => navigation.navigate("Settings")} />
+      )
+    };
+  };
 
   componentDidMount() {
     const { user, getHistory, nav } = this.props;
@@ -34,7 +39,6 @@ class HistoryScreen extends Component {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-    console.log("HELLO");
     return isLoading
       ? <LoadingComponent size="large" />
       : <ListView

@@ -178,13 +178,35 @@ function newChal(state = initialCreateChallengeState, action) {
       return state;
   }
 }
+const initialShowChallengeState = {
+  challenge: null,
+  isLoading: false
+};
+function showChal(state = initialShowChallengeState, action) {
+  switch (action.type) {
+    case types.CHALLENGE_SHOW_LOADING:
+      return {
+        ...state,
+        isLoading: true
+      };
 
+    case types.CHALLENGE_SHOW_SUCCESS:
+      return {
+        ...state,
+        challenge: action.challenge,
+        isLoading: false
+      };
+    default:
+      return state;
+  }
+}
 const AppReducer = combineReducers({
   nav,
   auth,
   trans,
   hist,
   newChal,
+  showChal,
   chal
 });
 

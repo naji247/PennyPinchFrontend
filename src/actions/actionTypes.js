@@ -19,3 +19,5 @@ exports.CHALLENGES_SUCCESS = "CHALLENGE: Successfully loaded user challenges";
 exports.CHALLENGES_FAILURE = "CHALLENGE: Successfully loaded user challenges";
 exports.SUBMIT_CHALLENGE_LOADING = "CHALLENGE: Send challenge for submit";
 exports.SUBMIT_CHALLENGE_SUCCESS = "CHALLENGE: Successfully submited";
+exports.CHALLENGE_SHOW_LOADING = "CHALLENGE: Loading single Challenge";
+exports.CHALLENGE_SHOW_SUCCESS = "CHALLENGE: Finished loading single Challenge";

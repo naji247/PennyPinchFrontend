@@ -99,7 +99,7 @@ class FriendRow extends Component {
 
 const mapStateToProps = state => ({
   nav: state.nav,
-  friends: state.auth.user.friends.data,
+  friends: state.auth.user.friends.data || [],
   selectedFriends: state.newChal.challenge.users
 });
 
