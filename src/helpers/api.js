@@ -8,6 +8,10 @@ export function userChallengesUrl(userId) {
   return `${server}/users/${userId}/challenges`;
 }
 
-export function challengesUrl() {
+export function createChallengeUrl() {
   return `${server}/challenges`;
+}
+
+export function getChallengeUrl(challengeId) {
+  return `${server}/challenges/${challengeId}`;
 }

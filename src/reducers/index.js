@@ -172,6 +172,8 @@ function newChal(state = initialCreateChallengeState, action) {
       };
     case types.SUBMIT_CHALLENGE_SUCCESS:
       return { ...state, isLoading: false };
+    case types.SUBMIT_CHALLENGE_FAILURE:
+      return { ...state, isLoading: false };
     case types.SUBMIT_CHALLENGE_LOADING:
       return { ...state, isLoading: true };
     default:
@@ -194,6 +196,11 @@ function showChal(state = initialShowChallengeState, action) {
       return {
         ...state,
         challenge: action.challenge,
+        isLoading: false
+      };
+    case types.CHALLENGE_SHOW_FAILURE:
+      return {
+        ...state,
         isLoading: false
       };
     default:
