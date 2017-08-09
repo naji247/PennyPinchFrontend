@@ -130,36 +130,9 @@ function challengeShowFailure() {
 
 function showChallenge(dispatch, challenge, user) {
   dispatch(challengeShowLoading());
-<<<<<<< HEAD
-  var challenge = {
-    challenge_id: "ba0ad9b5-2a13-4ac1-a848-6bcdad9196ef",
-    start_date: "2017-07-01T04:00:00.000Z",
-    end_date: "2017-08-01T04:00:00.000Z",
-    name: "Special",
-    challenge_type: "sprint",
-    created_at: "2017-07-17T12:30:27.917Z",
-    goal: 100,
-    participants: [
-      {
-        fbid: "1555981821079082",
-        key: 0,
-        first_name: "Derek",
-        last_name: "Lou",
-        spent: 50
-      },
-      {
-        fbid: "1555981821079083",
-        key: 1,
-        first_name: "Naseem",
-        last_name: "Alnaji",
-        spent: 75
-      }
-    ]
-=======
   const headers = {
     fbtoken: user.token,
     fbid: user.id
->>>>>>> d1d0197ce6ead048d3539ff539b28e82acffdbe7
   };
   fetch(api.userChallengesUrl(challenge.challengeId), { headers: headers })
     .then(function(response) {
