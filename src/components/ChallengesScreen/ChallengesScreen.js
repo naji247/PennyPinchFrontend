@@ -46,7 +46,7 @@ class ChallengesScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const { isLoading, challenges, challengeSelect } = this.props;
+    const { isLoading, user, challenges, challengeSelect } = this.props;
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
@@ -59,6 +59,7 @@ class ChallengesScreen extends Component {
             <ChallengeRow
               challenge={rowData}
               challengeSelect={challengeSelect}
+              user={user}
               navigate={navigate}
             />}
           pageSize={50}
@@ -70,9 +71,9 @@ class ChallengesScreen extends Component {
 
 class ChallengeRow extends Component {
   handleChallengeClick() {
-    const { challenge, challengeSelect, navigate } = this.props;
+    const { challenge, challengeSelect, navigate, user } = this.props;
     navigate("ChallengeShowScreen", { name: challenge.name });
-    challengeSelect(challenge);
+    challengeSelect(challenge, user);
   }
 
   render() {
@@ -106,8 +107,8 @@ const mapDispatchToProps = dispatch => ({
   getChallenges: user => {
     getChallenges(dispatch, user);
   },
-  challengeSelect: challenge => {
-    showChallenge(dispatch, challenge);
+  challengeSelect: (challenge, user) => {
+    showChallenge(dispatch, challenge, user);
   }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ChallengesScreen);

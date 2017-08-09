@@ -62,6 +62,9 @@ function submitChallengeLoading() {
 function submitChallengeSuccess() {
   return { type: types.SUBMIT_CHALLENGE_SUCCESS };
 }
+function submitChallengeFailure() {
+  return { type: types.SUBMIT_CHALLENGE_FAILURE };
+}
 
 const submitChallenge = (dispatch, user, challenge, navigation) => {
   dispatch(submitChallengeLoading());
@@ -87,7 +90,7 @@ const submitChallenge = (dispatch, user, challenge, navigation) => {
     body: JSON.stringify(body)
   };
 
-  fetch(api.challengesUrl(user.id), config)
+  fetch(api.createChallengeUrl(), config)
     .then(function(response) {
       return response.json();
     })
@@ -101,6 +104,7 @@ const submitChallenge = (dispatch, user, challenge, navigation) => {
       navigation.dispatch(resetAction);
     })
     .catch(err => {
+      dispatch(submitChallengeFailure());
       alert(err);
     });
 };
@@ -118,8 +122,15 @@ function challengeShowSuccess(challenge) {
   };
 }
 
-function showChallenge(dispatch, challenge) {
+function challengeShowFailure() {
+  return {
+    type: types.CHALLENGE_SHOW_FAILURE
+  };
+}
+
+function showChallenge(dispatch, challenge, user) {
   dispatch(challengeShowLoading());
+<<<<<<< HEAD
   var challenge = {
     challenge_id: "ba0ad9b5-2a13-4ac1-a848-6bcdad9196ef",
     start_date: "2017-07-01T04:00:00.000Z",
@@ -144,8 +155,24 @@ function showChallenge(dispatch, challenge) {
         spent: 75
       }
     ]
+=======
+  const headers = {
+    fbtoken: user.token,
+    fbid: user.id
+>>>>>>> d1d0197ce6ead048d3539ff539b28e82acffdbe7
   };
-  dispatch(challengeShowSuccess(challenge));
+  fetch(api.userChallengesUrl(challenge.challengeId), { headers: headers })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(body) {
+      if (body.error) throw body.error;
+      dispatch(challengeShowSuccess(body));
+    })
+    .catch(err => {
+      alert(err);
+      dispatch(challengeShowFailure());
+    });
 }
 
 module.exports = {
