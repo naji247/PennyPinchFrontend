@@ -130,16 +130,18 @@ function showChallenge(dispatch, challenge) {
     goal: 100,
     participants: [
       {
-        fbid: "1555981821079083",
+        fbid: "1555981821079082",
+        key: 0,
         first_name: "Derek",
         last_name: "Lou",
         spent: 50
       },
       {
         fbid: "1555981821079083",
-        first_name: "Derek",
-        last_name: "Lou",
-        spent: 50
+        key: 1,
+        first_name: "Naseem",
+        last_name: "Alnaji",
+        spent: 75
       }
     ]
   };

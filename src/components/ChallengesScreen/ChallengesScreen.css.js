@@ -4,6 +4,13 @@ module.exports = StyleSheet.create({
   container: {
     flex: 1
   },
+  progressRow: {
+    flexDirection: "row"
+  },
+  progressContainer: {
+    flex: 1,
+    margin: 5
+  },
   listView: {
     padding: 12,
     flexDirection: "column",
