@@ -1,8 +1,19 @@
 import React, { StyleSheet } from "react-native";
+import * as colors from "../../style/colors";
 
 module.exports = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    padding: 10,
+    flexDirection: "column",
+    alignItems: "flex-start",
+    backgroundColor: colors.appWhite
+  },
+  header: {
+    backgroundColor: colors.appCyan
+  },
+  headerTitle: {
+    color: colors.appWhite
   },
   progressRow: {
     flexDirection: "row"
@@ -13,6 +24,7 @@ module.exports = StyleSheet.create({
   },
   listView: {
     padding: 12,
+    backgroundColor: colors.appWhite,
     flexDirection: "column",
     alignItems: "flex-start"
   },
@@ -21,21 +33,38 @@ module.exports = StyleSheet.create({
     textAlign: "center",
     margin: 10
   },
-  challengeRow: {
-    flexDirection: "row"
+  listHeader: {
+    margin: 10,
+    fontSize: 18,
+    fontFamily: "HelveticaNeue",
+    marginRight: 40
   },
+
+  challengeRow: {
+    flexDirection: "row",
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderBottomColor: "black",
+    borderBottomWidth: StyleSheet.hairlineWidth
+  },
+
   textContainer: {
     flex: 1,
     flexDirection: "row",
-    height: 20
+    margin: 10
   },
-  date: {
-    flex: 2
+  name: {
+    flex: 1,
+    color: "black",
+    fontSize: 20,
+    fontFamily: "HelveticaNeue-Light"
   },
-  description: {
-    flex: 4
-  },
-  amount: {
-    flex: 1
+
+  place: {
+    flex: 1,
+    color: "black",
+    fontSize: 20,
+    fontFamily: "HelveticaNeue-Light",
+    textAlign: "right"
   }
 });

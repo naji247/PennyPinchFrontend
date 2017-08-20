@@ -1,29 +1,40 @@
 import React from "react";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import * as colors from "../../style/colors";
+import {
+  TouchableHighlight,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button
+} from "react-native";
 import { connect } from "react-redux";
 import * as styles from "./CreateTransactions.css";
 import { updateTransactionAction } from "../../actions/transactionActions";
 
 const TransactionAmountInput = ({ transaction, updateTransaction }) =>
-  <View style={styles.container}>
-    <Text>Amount:</Text>
+  <View style={styles.amountContainer}>
     <TextInput
-      style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+      style={styles.amountInput}
+      placeholder="Amount..."
       onChangeText={amount =>
         updateTransaction({ ...transaction, amount: amount })}
       keyboardType="numeric"
       value={transaction.amount}
+      placeholderTextColor={colors.appDarkgrey}
     />
   </View>;
 
 const TransactionDescriptionInput = ({ transaction, updateTransaction }) =>
-  <View style={styles.container}>
-    <Text>Description:</Text>
+  <View style={styles.descriptionContainer}>
     <TextInput
-      style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+      placeholder="Description..."
+      style={styles.descriptionInput}
       onChangeText={desc =>
         updateTransaction({ ...transaction, description: desc })}
       value={transaction.description}
+      placeholderTextColor={colors.appDarkgrey}
+      multiline={true}
     />
   </View>;
 
@@ -36,7 +47,7 @@ const TransactionTypeSelect = ({ transaction, updateTransaction }) =>
     />
     <Button
       onPress={() => updateTransaction({ ...transaction, isSpending: false })}
-      title="Saved"
+      title="Spent!"
       disabled={!transaction.isSpending}
     />
   </View>;
@@ -47,12 +58,15 @@ const TransactionSubmit = ({
   submitTransaction,
   navigation
 }) =>
-  <View style={styles.selectTypeContainer}>
-    <Button
-      onPress={() => submitTransaction(user, transaction, navigation)}
-      title={"Save!"}
-    />
-  </View>;
+  <TouchableHighlight
+    style={styles.selectTypeContainer}
+    onPress={() => submitTransaction(user, transaction, navigation)}
+    underlayColor={colors.appCyan}
+  >
+    <View style={styles.submitButton}>
+      <Text style={styles.submitButtonText}>Submit!</Text>
+    </View>
+  </TouchableHighlight>;
 
 module.exports = {
   TransactionAmountInput,

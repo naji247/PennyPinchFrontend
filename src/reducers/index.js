@@ -66,10 +66,10 @@ function auth(state = initialAuthState, action) {
 
 const initialTransactionState = {
   transaction: {
-    amount: "10",
+    amount: "",
     isSpending: true,
     isLoading: false,
-    description: "pizza"
+    description: ""
   }
 };
 
@@ -85,7 +85,12 @@ function trans(state = initialTransactionState, action) {
     case types.SUBMIT_TRANSACTION_SUCCESS:
       return {
         ...state,
-        transaction: { ...state.transaction, isLoading: false }
+        transaction: {
+          ...state.transaction,
+          amount: "",
+          description: "",
+          isLoading: false
+        }
       };
     default:
       return state;

@@ -42,7 +42,7 @@ function getChallenges(dispatch, user) {
     fbid: user.id
   };
 
-  fetch(api.userChallengesUrl(user.id), { headers: headers })
+  fetch(api.userActiveChallengesUrl(user.id), { headers: headers })
     .then(response => {
       return response.json();
     })
@@ -134,7 +134,7 @@ function showChallenge(dispatch, challenge, user) {
     fbtoken: user.token,
     fbid: user.id
   };
-  fetch(api.userChallengesUrl(challenge.challengeId), { headers: headers })
+  fetch(api.showChallengeUrl(challenge.challenge_id), { headers: headers })
     .then(function(response) {
       return response.json();
     })

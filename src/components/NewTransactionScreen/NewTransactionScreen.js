@@ -3,6 +3,7 @@ import { Button, StyleSheet, Text, View, TextInput } from "react-native";
 import { connect } from "react-redux";
 import * as styles from "./NewTransactionScreen.css";
 import { LoadingComponent } from "../UtilityComponents/LoadingComponents";
+import * as settingButton from "../UtilityComponents/SettingButtonStyle.css";
 import {
   updateTransactionAction,
   submitTransaction
@@ -13,13 +14,20 @@ import {
   TransactionSubmit,
   TransactionDescriptionInput
 } from "../CreateTransactions/CreateTransactions";
+import * as colors from "../../style/colors";
 
 class NewTransactionScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Add Transaction",
+      headerStyle: styles.header,
+      headerTitleStyle: styles.headerTitle,
       headerLeft: (
-        <Button title="Me" onPress={() => navigation.navigate("Settings")} />
+        <Button
+          color={colors.appWhite}
+          title="Me"
+          onPress={() => navigation.navigate("Settings")}
+        />
       )
     };
   };
@@ -42,10 +50,6 @@ class NewTransactionScreen extends Component {
             updateTransaction={updateTransaction}
           />
           <TransactionDescriptionInput
-            transaction={transaction}
-            updateTransaction={updateTransaction}
-          />
-          <TransactionTypeSelect
             transaction={transaction}
             updateTransaction={updateTransaction}
           />

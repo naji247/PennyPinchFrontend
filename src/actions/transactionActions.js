@@ -26,7 +26,7 @@ const submitTransaction = (dispatch, user, transaction, navigation) => {
   };
 
   const finalAmount =
-    (transaction.isSpending ? -1 : 1) * parseInt(transaction.amount);
+    (transaction.isSpending ? -1 : 1) * parseFloat(transaction.amount);
   const body = {
     description: transaction.description,
     date: new Date().toISOString(),

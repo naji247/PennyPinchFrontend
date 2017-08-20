@@ -4,14 +4,14 @@ export function userHistoryUrl(userId) {
   return `${server}/users/${userId}/transactions`;
 }
 
-export function userChallengesUrl(userId) {
-  return `${server}/users/${userId}/challenges`;
+export function userActiveChallengesUrl(userId) {
+  return `${server}/users/${userId}/challenges?active=1`;
 }
 
 export function createChallengeUrl() {
   return `${server}/challenges`;
 }
 
-export function getChallengeUrl(challengeId) {
+export function showChallengeUrl(challengeId) {
   return `${server}/challenges/${challengeId}`;
 }

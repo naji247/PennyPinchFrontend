@@ -12,17 +12,41 @@ import * as styles from "./ChallengesScreen.css";
 import { LoadingComponent } from "../UtilityComponents/LoadingComponents";
 import { getChallenges, showChallenge } from "../../actions/challengeActions";
 import moment from "moment";
+import _ from "lodash";
+import * as colors from "../../style/colors";
+
+function getOrdinal(n) {
+  var s = ["th", "st", "nd", "rd"],
+    v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+function getUserPlace(user, userRankings) {
+  console.log(user);
+  var index = _.findIndex(userRankings, function(o) {
+    return o.fbid == user.id;
+  });
+  return getOrdinal(index + 1);
+}
 
 class ChallengesScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Challenges",
+      headerStyle: styles.header,
+      headerTitleStyle: styles.headerTitle,
       headerLeft: (
-        <Button title="Me" onPress={() => navigation.navigate("Settings")} />
+        <Button
+          color={colors.appWhite}
+          title="Me"
+          onPress={() => navigation.navigate("Settings")}
+        />
       ),
       headerRight: (
         <Button
           title="+"
+          color={colors.appWhite}
+          style={{ margin: 5 }}
           onPress={() => navigation.navigate("AddFriendsScreen")}
         />
       )
@@ -52,20 +76,34 @@ class ChallengesScreen extends Component {
     });
     return isLoading
       ? <LoadingComponent size="large" />
-      : <ListView
-          contentContainerStyle={styles.listView}
-          dataSource={ds.cloneWithRows(challenges)}
-          renderRow={rowData =>
-            <ChallengeRow
-              challenge={rowData}
-              challengeSelect={challengeSelect}
-              user={user}
-              navigate={navigate}
-            />}
-          pageSize={50}
-          initialListSize={50}
-          enableEmptySections={true}
-        />;
+      : <View style={styles.container}>
+          <ListView
+            contentContainerStyle={styles.listView}
+            dataSource={ds.cloneWithRows(challenges)}
+            renderRow={rowData =>
+              <ChallengeRow
+                challenge={rowData}
+                challengeSelect={challengeSelect}
+                user={user}
+                navigate={navigate}
+              />}
+            pageSize={50}
+            initialListSize={50}
+            enableEmptySections={true}
+            renderHeader={() =>
+              <View
+                style={{
+                  borderBottomColor: colors.appDarkgrey,
+                  borderBottomWidth: StyleSheet.hairlineWidth
+                }}
+              >
+                <Text style={styles.listHeader}>
+                  These are your current active challenges. Tap a challenge to
+                  see your progress!
+                </Text>
+              </View>}
+          />
+        </View>;
   }
 }
 
@@ -77,19 +115,19 @@ class ChallengeRow extends Component {
   }
 
   render() {
-    const { challenge } = this.props;
+    const { user, challenge } = this.props;
     return (
       <TouchableHighlight
         onPress={() => this.handleChallengeClick()}
         style={styles.challengeRow}
+        underlayColor={colors.appTransparentDarkgrey}
       >
         <View style={styles.textContainer}>
-          <Text style={styles.date}>
+          <Text style={styles.name}>
             {challenge.name}
           </Text>
-          <Text style={styles.date}>
-            {challenge.users.length}{" "}
-            {challenge.users.length == 1 ? "Competitor" : "Competitors"}
+          <Text style={styles.place}>
+            {getUserPlace(user, challenge.users)} Place
           </Text>
         </View>
       </TouchableHighlight>

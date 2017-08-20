@@ -1,11 +1,18 @@
 import React, { StyleSheet } from "react-native";
+import * as colors from "../../style/colors";
 
 module.exports = StyleSheet.create({
+  header: {
+    backgroundColor: colors.appCyan
+  },
+  headerTitle: {
+    color: colors.appWhite
+  },
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5FCFF"
+    backgroundColor: colors.appWhite
   },
   welcome: {
     fontSize: 20,
