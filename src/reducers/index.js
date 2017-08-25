@@ -33,6 +33,7 @@ function nav(state = initialNavState, action) {
 const initialAuthState = { isLoggedIn: false, user: null, isLoading: false };
 
 function auth(state = initialAuthState, action) {
+  console.log(state);
   switch (action.type) {
     case types.LOGIN_LOADING:
       return { ...state, isLoading: true };

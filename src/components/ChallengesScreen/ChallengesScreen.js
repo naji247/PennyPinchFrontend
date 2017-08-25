@@ -5,6 +5,7 @@ import {
   View,
   ListView,
   Button,
+  Image,
   TouchableHighlight
 } from "react-native";
 import { connect } from "react-redux";
@@ -22,17 +23,20 @@ function getOrdinal(n) {
 }
 
 function getUserPlace(user, userRankings) {
-  console.log(user);
-  var index = _.findIndex(userRankings, function(o) {
-    return o.fbid == user.id;
-  });
-  return getOrdinal(index + 1);
+  if (user) {
+    var index = _.findIndex(userRankings, function(o) {
+      return o.fbid == user.id;
+    });
+    return getOrdinal(index + 1);
+  }
 }
 
 class ChallengesScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Challenges",
+      tabBarIcon: ({ tintColor }) =>
+        <Image source={require("./trophy-05.png")} style={styles.icon} />,
       headerStyle: styles.header,
       headerTitleStyle: styles.headerTitle,
       headerLeft: (
@@ -93,7 +97,7 @@ class ChallengesScreen extends Component {
             renderHeader={() =>
               <View
                 style={{
-                  borderBottomColor: colors.appDarkgrey,
+                  borderBottomColor: colors.appDivider,
                   borderBottomWidth: StyleSheet.hairlineWidth
                 }}
               >
@@ -120,7 +124,7 @@ class ChallengeRow extends Component {
       <TouchableHighlight
         onPress={() => this.handleChallengeClick()}
         style={styles.challengeRow}
-        underlayColor={colors.appTransparentDarkgrey}
+        underlayColor={colors.appTransparentCyan}
       >
         <View style={styles.textContainer}>
           <Text style={styles.name}>

@@ -5,9 +5,11 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   ListView,
   Button
 } from "react-native";
+import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import * as styles from "./ChallengesScreen.css";
 import { LoadingComponent } from "../UtilityComponents/LoadingComponents";
@@ -16,6 +18,8 @@ import {
   submitChallenge
 } from "../../actions/challengeActions";
 import moment from "moment";
+import * as colors from "../../style/colors";
+import DatePicker from "react-native-datepicker";
 
 class CreateChallengeScreen extends Component {
   constructor() {
@@ -23,7 +27,18 @@ class CreateChallengeScreen extends Component {
   }
 
   static navigationOptions = ({ navigation }) => ({
-    title: "Pick Challenge"
+    title: "Challenges",
+    tabBarIcon: ({ tintColor }) =>
+      <Image source={require("./trophy-05.png")} style={styles.icon} />,
+    headerStyle: styles.header,
+    headerTitleStyle: styles.headerTitle,
+    headerLeft: (
+      <Button
+        color={colors.appWhite}
+        title="Back"
+        onPress={() => navigation.dispatch(NavigationActions.back(null))}
+      />
+    )
   });
 
   componentDidMount() {
@@ -56,24 +71,36 @@ class CreateChallengeScreen extends Component {
 }
 
 const ChallengeNameInput = ({ challenge, updateChallenge }) =>
-  <View style={styles.container}>
-    <Text>Name:</Text>
-    <TextInput
-      style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-      onChangeText={name => updateChallenge({ ...challenge, name: name })}
-      value={challenge.name}
-    />
+  <View style={{ flex: 1, flexDirection: "row" }}>
+    <View style={{ flex: 1, flexDirection: "column" }}>
+      <View style={{ marginBottom: 5 }}>
+        <Text>Name:</Text>
+      </View>
+      <View style={{ flex: 1, flexDirection: "row" }}>
+        <TextInput
+          style={{ flex: 1, height: 40, borderWidth: 1 }}
+          onChangeText={name => updateChallenge({ ...challenge, name: name })}
+          value={challenge.name}
+        />
+      </View>
+    </View>
   </View>;
 
 const ChallengeGoalInput = ({ challenge, updateChallenge }) =>
-  <View style={styles.container}>
-    <Text>Goal:</Text>
-    <TextInput
-      style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-      onChangeText={goal => updateChallenge({ ...challenge, goal: goal })}
-      keyboardType="numeric"
-      value={challenge.goal}
-    />
+  <View style={{ flex: 1, flexDirection: "row" }}>
+    <View style={{ flex: 1, flexDirection: "column" }}>
+      <View style={{ marginBottom: 5 }}>
+        <Text>Goal:</Text>
+      </View>
+      <View style={{ flex: 1, flexDirection: "row" }}>
+        <TextInput
+          style={{ flex: 1, height: 40, borderWidth: 1 }}
+          onChangeText={goal => updateChallenge({ ...challenge, goal: goal })}
+          keyboardType="numeric"
+          value={challenge.goal}
+        />
+      </View>
+    </View>
   </View>;
 
 class ChallengeDateInput extends Component {
@@ -104,21 +131,48 @@ class ChallengeDateInput extends Component {
     const { challenge, updateChallenge, field } = this.props;
     var isStart = field == "start_date";
     var date = isStart ? challenge.start_date : challenge.end_date;
+    var minDate = isStart
+      ? moment().format("MMM. DD, YYYY")
+      : moment().add(1, "day").format("MMM. DD, YYYY");
+    var maxDate = isStart
+      ? moment().add(1, "month").format("MMM. DD, YYYY")
+      : moment().add(2, "months").format("MMM. DD, YYYY");
     return (
-      <View style={styles.container}>
-        <Text>
-          {isStart ? "Start Date:" : "End Date:"}
-        </Text>
-        <TextInput
-          style={this.validStyle(date)}
-          onChangeText={date =>
-            updateChallenge(
-              isStart
-                ? { ...challenge, start_date: date }
-                : { ...challenge, end_date: date }
-            )}
-          value={date}
-        />
+      <View style={{ flex: 1, flexDirection: "row" }}>
+        <View style={{ flex: 1, flexDirection: "column" }}>
+          <View style={{ marginBottom: 5 }}>
+            <Text>
+              {isStart ? "Start Date:" : "End Date:"}
+            </Text>
+          </View>
+          <View style={{ flex: 1, flexDirection: "row" }}>
+            <DatePicker
+              style={{ flex: 1, height: 40, borderWidth: 1 }}
+              date={date}
+              mode="date"
+              format="MMM. DD, YYYY"
+              placeholder="select date"
+              minDate={minDate}
+              maxDate={maxDate}
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              showIcon={false}
+              customStyles={{
+                dateInput: {
+                  borderWidth: 0
+                }
+                // ... You can check the source to find the other keys.
+              }}
+              onDateChange={date => {
+                updateChallenge(
+                  isStart
+                    ? { ...challenge, start_date: date }
+                    : { ...challenge, end_date: date }
+                );
+              }}
+            />
+          </View>
+        </View>
       </View>
     );
   }

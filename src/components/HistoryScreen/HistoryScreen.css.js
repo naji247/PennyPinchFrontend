@@ -30,7 +30,7 @@ module.exports = StyleSheet.create({
     flexDirection: "row",
     marginTop: 10,
     marginBottom: 10,
-    borderBottomColor: "black",
+    borderBottomColor: colors.appDivider,
     borderBottomWidth: StyleSheet.hairlineWidth
   },
   textContainer: {
@@ -54,7 +54,7 @@ module.exports = StyleSheet.create({
   amount: {
     flex: 1,
     margin: 10,
-    color: "black",
+    color: colors.appBlack,
     fontSize: 20,
     fontFamily: "HelveticaNeue",
     textAlign: "right"

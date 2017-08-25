@@ -7,7 +7,7 @@ import { getHistory } from "../../actions/transactionActions";
 import moment from "moment";
 import * as colors from "../../style/colors";
 
-const EmptyHistory = ({}) =>
+const EmptyHistory = ({ hello }) =>
   <View style={styles.emptyContainer}>
     <Text style={styles.emptyText}>You haven't spent any money yet!</Text>
     <Text style={styles.emptyText}>
@@ -73,7 +73,7 @@ class HistoryScreen extends Component {
                 renderHeader={() =>
                   <View
                     style={{
-                      borderBottomColor: colors.appDarkgrey,
+                      borderBottomColor: colors.appDivider,
                       borderBottomWidth: StyleSheet.hairlineWidth
                     }}
                   >

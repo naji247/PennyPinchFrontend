@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, StyleSheet, Text, View, TextInput } from "react-native";
+import { Button, StyleSheet, Text, Image, View, TextInput } from "react-native";
 import { connect } from "react-redux";
 import * as styles from "./NewTransactionScreen.css";
 import { LoadingComponent } from "../UtilityComponents/LoadingComponents";
@@ -20,6 +20,8 @@ class NewTransactionScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Add Transaction",
+      tabBarIcon: ({ tintColor }) =>
+        <Image source={require("./plus-06.png")} style={styles.icon} />,
       headerStyle: styles.header,
       headerTitleStyle: styles.headerTitle,
       headerLeft: (

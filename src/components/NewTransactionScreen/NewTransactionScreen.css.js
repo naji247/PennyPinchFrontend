@@ -18,5 +18,9 @@ module.exports = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     margin: 10
+  },
+  icon: {
+    height: 26,
+    width: 26
   }
 });

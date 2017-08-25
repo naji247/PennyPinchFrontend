@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import { NavigationActions } from "react-navigation";
 import {
   TouchableHighlight,
   StyleSheet,
   Text,
   View,
+  Image,
   ListView,
   Button
 } from "react-native";
@@ -13,6 +15,7 @@ import { LoadingComponent } from "../UtilityComponents/LoadingComponents";
 import { selectFriendAction } from "../../actions/challengeActions";
 import { Bar } from "react-native-progress";
 import moment from "moment";
+import * as colors from "../../style/colors";
 
 class ChallengeShowScreen extends Component {
   constructor() {
@@ -20,7 +23,18 @@ class ChallengeShowScreen extends Component {
   }
 
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.name
+    title: navigation.state.params.name,
+    tabBarIcon: ({ tintColor }) =>
+      <Image source={require("./trophy-05.png")} style={styles.icon} />,
+    headerStyle: styles.header,
+    headerTitleStyle: styles.headerTitle,
+    headerLeft: (
+      <Button
+        color={colors.appWhite}
+        title="Back"
+        onPress={() => navigation.dispatch(NavigationActions.back(null))}
+      />
+    )
   });
 
   componentDidMount() {}

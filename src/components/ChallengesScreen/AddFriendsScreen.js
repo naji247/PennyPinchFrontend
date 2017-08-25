@@ -3,6 +3,7 @@ import {
   TouchableHighlight,
   StyleSheet,
   Text,
+  Image,
   View,
   ListView,
   Button
@@ -10,8 +11,10 @@ import {
 import { connect } from "react-redux";
 import * as styles from "./ChallengesScreen.css";
 import { LoadingComponent } from "../UtilityComponents/LoadingComponents";
+import { NavigationActions } from "react-navigation";
 import { selectFriendAction } from "../../actions/challengeActions";
 import moment from "moment";
+import * as colors from "../../style/colors";
 
 class AddFriendsScreen extends Component {
   constructor() {
@@ -19,7 +22,18 @@ class AddFriendsScreen extends Component {
   }
 
   static navigationOptions = ({ navigation }) => ({
-    title: "Pick friends!"
+    title: "Challenges",
+    tabBarIcon: ({ tintColor }) =>
+      <Image source={require("./trophy-05.png")} style={styles.icon} />,
+    headerLeft: (
+      <Button
+        color={colors.appWhite}
+        title="Back"
+        onPress={() => navigation.dispatch(NavigationActions.back(null))}
+      />
+    ),
+    headerStyle: styles.header,
+    headerTitleStyle: styles.headerTitle
   });
 
   componentDidMount() {
@@ -41,21 +55,35 @@ class AddFriendsScreen extends Component {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
+    if (friends.length === 0) {
+      return (
+        <View style={styles.friendScreen}>
+          <Text style={styles.noFriends}>
+            Sadly you have no friends using the app yet :(
+          </Text>
+          <Text style={styles.noFriends}>
+            Invite them to come join the party!
+          </Text>
+        </View>
+      );
+    }
     return (
-      <View style={styles.container}>
-        <ListView
-          contentContainerStyle={styles.listView}
-          dataSource={ds.cloneWithRows(friends)}
-          renderRow={rowData =>
-            <FriendRow
-              selectFriend={selectFriend}
-              selectedFriends={selectedFriends}
-              friend={rowData}
-            />}
-          removeClippedSubviews={false}
-          pageSize={50}
-          initialListSize={50}
-        />
+      <View style={styles.friendScreen}>
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <ListView
+            contentContainerStyle={{ flex: 1 }}
+            dataSource={ds.cloneWithRows(friends)}
+            renderRow={rowData =>
+              <FriendRow
+                selectFriend={selectFriend}
+                selectedFriends={selectedFriends}
+                friend={rowData}
+              />}
+            removeClippedSubviews={false}
+            pageSize={50}
+            initialListSize={50}
+          />
+        </View>
         <Button
           title="Pick a Challenge!"
           onPress={() => navigate("CreateChallengeScreen")}
@@ -82,14 +110,12 @@ class FriendRow extends Component {
     return (
       <TouchableHighlight
         onPress={() => this.handleFriendClick()}
-        style={styles.challengeRow}
+        style={!selected ? styles.friendRow : styles.activeFriendRow}
+        underlayColor={colors.appTransparentCyan}
       >
         <View style={styles.textContainer}>
-          <Text style={styles.date}>
+          <Text style={!selected ? styles.friendName : styles.activeFriendName}>
             {friend.name}
-          </Text>
-          <Text style={styles.date}>
-            {selected ? "selected" : ""}
           </Text>
         </View>
       </TouchableHighlight>
