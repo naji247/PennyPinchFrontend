@@ -25,7 +25,7 @@ function getOrdinal(n) {
 function getUserPlace(user, userRankings) {
   if (user) {
     var index = _.findIndex(userRankings, function(o) {
-      return o.fbid == user.id;
+      return o.fbid == user.id || o.fbid == user.fbid;
     });
     return getOrdinal(index + 1);
   }
@@ -44,14 +44,6 @@ class ChallengesScreen extends Component {
           color={colors.appWhite}
           title="Me"
           onPress={() => navigation.navigate("Settings")}
-        />
-      ),
-      headerRight: (
-        <Button
-          title="+"
-          color={colors.appWhite}
-          style={{ margin: 5 }}
-          onPress={() => navigation.navigate("AddFriendsScreen")}
         />
       )
     };
@@ -81,6 +73,27 @@ class ChallengesScreen extends Component {
     return isLoading
       ? <LoadingComponent size="large" />
       : <View style={styles.container}>
+          <TouchableHighlight
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              backgroundColor: colors.appGreen,
+              marginHorizontal: 30
+            }}
+            underlayColor={colors.appTransparentGreen}
+            onPress={() => navigate("AddFriendsScreen")}
+          >
+            <Text
+              style={{
+                flex: 1,
+                textAlign: "center",
+                color: colors.appWhite,
+                padding: 10
+              }}
+            >
+              Add a Challenge
+            </Text>
+          </TouchableHighlight>
           <ListView
             contentContainerStyle={styles.listView}
             dataSource={ds.cloneWithRows(challenges)}
@@ -120,25 +133,68 @@ class ChallengeRow extends Component {
 
   render() {
     const { user, challenge } = this.props;
+    const numOfUsersToPreview =
+      challenge.users.length >= 3 ? 3 : challenge.users.length;
+    const usersToShow = challenge.users.slice(0, numOfUsersToPreview - 1);
     return (
       <TouchableHighlight
         onPress={() => this.handleChallengeClick()}
         style={styles.challengeRow}
         underlayColor={colors.appTransparentCyan}
       >
-        <View style={styles.textContainer}>
-          <Text style={styles.name}>
-            {challenge.name}
-          </Text>
-          <Text style={styles.place}>
-            {getUserPlace(user, challenge.users)} Place
-          </Text>
+        <View style={{ flex: 1 }}>
+          <View style={styles.textContainer}>
+            <Text style={styles.name}>
+              {challenge.name}
+            </Text>
+            <Text style={styles.place}>
+              {getUserPlace(user, challenge.users)} of {challenge.users.length}
+            </Text>
+          </View>
+          {usersToShow.map(function(usr, i) {
+            return (
+              <UserPlaceItem
+                user={usr}
+                currentUser={user}
+                tryme={usersToShow}
+                key={i}
+              />
+            );
+          })}
+          <UserPlaceItem
+            user={challenge.users[numOfUsersToPreview - 1]}
+            currentUser={user}
+            tryme={challenge.users}
+            showTimeLeft={moment(challenge.end_date)}
+          />
         </View>
       </TouchableHighlight>
     );
   }
 }
 
+class UserPlaceItem extends Component {
+  render() {
+    const { user, tryme, currentUser, showTimeLeft } = this.props;
+    if (user != null && currentUser != null) {
+      const nameToShow = currentUser.id == user.fbid ? "You" : user.first_name;
+      return (
+        <View style={styles.textContainer}>
+          <Text style={styles.userItemText}>
+            {getUserPlace(user, tryme)}: {nameToShow}
+          </Text>
+          {showTimeLeft
+            ? <Text style={styles.place}>
+                {_.capitalize(showTimeLeft.fromNow(true))} left
+              </Text>
+            : null}
+        </View>
+      );
+    } else {
+      return null;
+    }
+  }
+}
 const mapStateToProps = state => ({
   user: state.auth.user,
   nav: state.nav,

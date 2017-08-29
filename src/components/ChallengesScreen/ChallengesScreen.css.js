@@ -53,7 +53,7 @@ module.exports = StyleSheet.create({
   },
   listHeader: {
     margin: 10,
-    fontSize: 18,
+    fontSize: 15,
     fontFamily: "HelveticaNeue",
     marginRight: 40
   },
@@ -82,16 +82,16 @@ module.exports = StyleSheet.create({
 
   challengeRow: {
     flexDirection: "row",
-    paddingTop: 10,
-    paddingBottom: 10,
     borderBottomColor: colors.appDivider,
-    borderBottomWidth: StyleSheet.hairlineWidth
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    paddingTop: 5,
+    paddingBottom: 5
   },
 
   textContainer: {
     flex: 1,
     flexDirection: "row",
-    margin: 10
+    margin: 5
   },
 
   selected: {
@@ -113,17 +113,23 @@ module.exports = StyleSheet.create({
     fontFamily: "HelveticaNeue-Light"
   },
   name: {
-    flex: 1,
+    flex: 4,
     color: colors.appBlack,
-    fontSize: 20,
-    fontFamily: "HelveticaNeue-Light"
+    fontSize: 15,
+    fontFamily: "HelveticaNeue",
+    fontWeight: "bold"
   },
 
   place: {
     flex: 1,
     color: colors.appBlack,
-    fontSize: 20,
-    fontFamily: "HelveticaNeue-Light",
+    fontSize: 13,
+    fontFamily: "HelveticaNeue",
     textAlign: "right"
+  },
+
+  userItemText: {
+    textAlign: "left",
+    fontFamily: "HelveticaNeue-Thin"
   }
 });

@@ -12,7 +12,7 @@ module.exports = StyleSheet.create({
     flexDirection: "row"
   },
   descriptionContainer: {
-    flex: 5,
+    flex: 8,
     justifyContent: "flex-start",
     alignItems: "flex-start",
     backgroundColor: "#F5FCFF",
@@ -34,7 +34,7 @@ module.exports = StyleSheet.create({
   },
   selectTypeContainer: {
     flex: 1,
-    backgroundColor: colors.appDeepBlue,
+    backgroundColor: colors.appGreen,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center"

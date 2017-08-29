@@ -18,7 +18,7 @@ export const MainNavigator = TabNavigator(
     tabBarOptions: {
       style: { backgroundColor: colors.appBlack },
       labelStyle: { color: colors.appWhite },
-      activeBackgroundColor: colors.appCyan
+      activeBackgroundColor: colors.appTransparentDarkgrey
     }
   }
 );

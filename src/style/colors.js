@@ -7,5 +7,7 @@ module.exports = {
   appCyan: "rgba(6, 190, 225, 1)",
   appTransparentCyan: "rgba(6, 190, 225, .5)",
   appDeepBlue: "rgba(28, 110, 140, 1)",
-  appBlack: "rgba(51, 50, 49, 1)"
+  appBlack: "rgba(51, 50, 49, 1)",
+  appGreen: "rgba(61, 221, 61, 1)",
+  appTransparentGreen: "rgba(61, 221, 61, .5)"
 };
