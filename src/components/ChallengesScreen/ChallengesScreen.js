@@ -78,7 +78,8 @@ class ChallengesScreen extends Component {
               flexDirection: "row",
               justifyContent: "center",
               backgroundColor: colors.appGreen,
-              marginHorizontal: 30
+              marginHorizontal: 30,
+              marginTop: 10
             }}
             underlayColor={colors.appTransparentGreen}
             onPress={() => navigate("AddFriendsScreen")}

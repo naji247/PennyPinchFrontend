@@ -60,6 +60,7 @@ const submitTransaction = (dispatch, user, transaction, navigation) => {
       navigation.dispatch(resetAction);
     })
     .catch(err => {
+      dispatch(submitTransactionSuccess());
       alert(err);
     });
 };

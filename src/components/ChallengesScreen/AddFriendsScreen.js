@@ -111,7 +111,7 @@ class FriendRow extends Component {
       <TouchableHighlight
         onPress={() => this.handleFriendClick()}
         style={!selected ? styles.friendRow : styles.activeFriendRow}
-        underlayColor={colors.appTransparentCyan}
+        underlayColor={colors.appTransparentGreen}
       >
         <View style={styles.textContainer}>
           <Text style={!selected ? styles.friendName : styles.activeFriendName}>
