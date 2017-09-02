@@ -9,6 +9,7 @@ import {
   ListView,
   Button
 } from "react-native";
+import _ from "lodash";
 import { connect } from "react-redux";
 import * as styles from "./ChallengesScreen.css";
 import { LoadingComponent } from "../UtilityComponents/LoadingComponents";
@@ -23,9 +24,10 @@ class ChallengeShowScreen extends Component {
   }
 
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.name,
-    tabBarIcon: ({ tintColor }) =>
-      <Image source={require("./trophy-05.png")} style={styles.icon} />,
+    title: "Challenge Details", //navigation.state.params.name,
+    tabBarIcon: ({ tintColor }) => (
+      <Image source={require("./trophy-05.png")} style={styles.icon} />
+    ),
     headerStyle: styles.header,
     headerTitleStyle: styles.headerTitle,
     headerLeft: (
@@ -41,46 +43,150 @@ class ChallengeShowScreen extends Component {
 
   render() {
     const { isLoading, challenge } = this.props;
+    return isLoading ? (
+      <LoadingComponent size="large" />
+    ) : (
+      <LeaderBoard challenge={challenge} />
+    );
+  }
+}
+
+class LeaderBoard extends Component {
+  render() {
+    const { challenge } = this.props;
     const rowSource = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-    return isLoading
-      ? <LoadingComponent size="large" />
-      : <ListView
-          contentContainerStyle={styles.listView}
+    endDate = moment(challenge.end_date);
+    return (
+      <View style={{ backgroundColor: colors.appWhite, flex: 1 }}>
+        <View>
+          <Text
+            style={{
+              marginVertical: 10,
+              fontSize: 20,
+              textAlign: "center",
+              fontWeight: "bold",
+              fontFamily: "HelveticaNeue"
+            }}
+          >
+            {challenge.name}
+          </Text>
+
+          <Text
+            style={{
+              marginBottom: 10,
+              textAlign: "center",
+              fontFamily: "HelveticaNeue"
+            }}
+          >
+            {_.capitalize(endDate.fromNow(true))} left
+          </Text>
+          <Text
+            style={{
+              marginBottom: 20,
+              textAlign: "center",
+              fontFamily: "HelveticaNeue"
+            }}
+          >
+            Goal: ${challenge.goal}
+          </Text>
+        </View>
+        <View
+          style={{
+            borderBottomColor: colors.appDivider,
+            borderBottomWidth: StyleSheet.hairlineWidth
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              fontFamily: "HelveticaNeue",
+              fontWeight: "bold",
+              fontSize: 16,
+              marginBottom: 5
+            }}
+          >
+            Leader Board
+          </Text>
+        </View>
+        <ListView
+          contentContainerStyle={styles.showListView}
           dataSource={rowSource.cloneWithRows(challenge.participants)}
-          renderRow={(rowData, sectionID, rowID) =>
+          renderRow={(rowData, sectionID, rowID) => (
             <ProgessRow
               userProgress={rowData}
               rank={rowID}
               challenge={challenge}
-            />}
+            />
+          )}
           pageSize={50}
           initialListSize={50}
           enableEmptySections={true}
-        />;
+        />
+      </View>
+    );
+  }
+}
+
+function getOrdinal(n) {
+  var s = ["th", "st", "nd", "rd"],
+    v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+function getUserPlace(user, userRankings) {
+  if (user) {
+    var index = _.findIndex(userRankings, function(o) {
+      return o.fbid == user.id || o.fbid == user.fbid;
+    });
+    return getOrdinal(index + 1);
   }
 }
 
 class ProgessRow extends Component {
   render() {
     const { userProgress, challenge } = this.props;
-    const progress = parseInt(userProgress.spent) / parseInt(challenge.goal);
-    console.log(this.props);
+
+    const spent = parseInt(userProgress.spent);
+    const goal = parseInt(challenge.goal);
+    const progress = spent / goal;
+    const isNegative = spent > goal;
+    const userPlace = getUserPlace(userProgress, challenge.participants);
     return (
       <View style={styles.progressRow}>
         <View style={styles.progressContainer}>
-          <Text style={styles.progressText}>
-            {`${userProgress.first_name} ${userProgress.last_name}`}
-          </Text>
-          <Bar
-            progress={progress}
-            color={"aliceblue"}
-            unfilledColor={"#007aff"}
-            height={8}
-            borderColor="#007aff"
-            width={null}
-          />
+          <View
+            style={{
+              marginBottom: 10,
+              flexDirection: "row",
+              marginVertical: 5
+            }}
+          >
+            <Text style={{ fontWeight: "bold", flex: 1 }}>{userPlace}</Text>
+            <Text style={{ flex: 7 }}>
+              {`${userProgress.first_name} ${userProgress.last_name}`}
+            </Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ flex: 5 }}>
+              <Bar
+                progress={progress}
+                color={colors.appWhite}
+                unfilledColor={colors.appCyan}
+                height={8}
+                borderColor={colors.appCyan}
+                borderWidth={3}
+                borderRadius={15}
+                width={null}
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={{ textAlign: "right" }}>
+                {isNegative ? "-" : null}${Math.abs(goal - spent)}
+              </Text>
+            </View>
+          </View>
         </View>
       </View>
     );
