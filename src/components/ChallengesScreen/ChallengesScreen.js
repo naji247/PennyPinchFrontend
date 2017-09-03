@@ -15,6 +15,7 @@ import { getChallenges, showChallenge } from "../../actions/challengeActions";
 import moment from "moment";
 import _ from "lodash";
 import * as colors from "../../style/colors";
+import { logout } from "../../actions/authActions";
 
 function getOrdinal(n) {
   var s = ["th", "st", "nd", "rd"],
@@ -35,15 +36,16 @@ class ChallengesScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Challenges",
-      tabBarIcon: ({ tintColor }) =>
-        <Image source={require("./trophy-05.png")} style={styles.icon} />,
+      tabBarIcon: ({ tintColor }) => (
+        <Image source={require("./trophy-05.png")} style={styles.icon} />
+      ),
       headerStyle: styles.header,
       headerTitleStyle: styles.headerTitle,
       headerLeft: (
         <Button
           color={colors.appWhite}
-          title="Me"
-          onPress={() => navigation.navigate("Settings")}
+          title="Logout"
+          onPress={() => navigation.dispatch(logout())}
         />
       )
     };
@@ -70,58 +72,62 @@ class ChallengesScreen extends Component {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-    return isLoading
-      ? <LoadingComponent size="large" />
-      : <View style={styles.container}>
-          <TouchableHighlight
+    return isLoading ? (
+      <LoadingComponent size="large" />
+    ) : (
+      <View style={styles.container}>
+        <TouchableHighlight
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            backgroundColor: colors.appGreen,
+            marginHorizontal: 30,
+            marginTop: 10
+          }}
+          underlayColor={colors.appTransparentGreen}
+          onPress={() => navigate("AddFriendsScreen")}
+        >
+          <Text
             style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              backgroundColor: colors.appGreen,
-              marginHorizontal: 30,
-              marginTop: 10
+              flex: 1,
+              textAlign: "center",
+              color: colors.appWhite,
+              padding: 10
             }}
-            underlayColor={colors.appTransparentGreen}
-            onPress={() => navigate("AddFriendsScreen")}
           >
-            <Text
+            Add a Challenge
+          </Text>
+        </TouchableHighlight>
+        <ListView
+          contentContainerStyle={styles.listView}
+          dataSource={ds.cloneWithRows(challenges)}
+          renderRow={rowData => (
+            <ChallengeRow
+              challenge={rowData}
+              challengeSelect={challengeSelect}
+              user={user}
+              navigate={navigate}
+            />
+          )}
+          pageSize={50}
+          initialListSize={50}
+          enableEmptySections={true}
+          renderHeader={() => (
+            <View
               style={{
-                flex: 1,
-                textAlign: "center",
-                color: colors.appWhite,
-                padding: 10
+                borderBottomColor: colors.appDivider,
+                borderBottomWidth: StyleSheet.hairlineWidth
               }}
             >
-              Add a Challenge
-            </Text>
-          </TouchableHighlight>
-          <ListView
-            contentContainerStyle={styles.listView}
-            dataSource={ds.cloneWithRows(challenges)}
-            renderRow={rowData =>
-              <ChallengeRow
-                challenge={rowData}
-                challengeSelect={challengeSelect}
-                user={user}
-                navigate={navigate}
-              />}
-            pageSize={50}
-            initialListSize={50}
-            enableEmptySections={true}
-            renderHeader={() =>
-              <View
-                style={{
-                  borderBottomColor: colors.appDivider,
-                  borderBottomWidth: StyleSheet.hairlineWidth
-                }}
-              >
-                <Text style={styles.listHeader}>
-                  These are your current active challenges. Tap a challenge to
-                  see your progress!
-                </Text>
-              </View>}
-          />
-        </View>;
+              <Text style={styles.listHeader}>
+                These are your current active challenges. Tap a challenge to see
+                your progress!
+              </Text>
+            </View>
+          )}
+        />
+      </View>
+    );
   }
 }
 
@@ -145,9 +151,7 @@ class ChallengeRow extends Component {
       >
         <View style={{ flex: 1 }}>
           <View style={styles.textContainer}>
-            <Text style={styles.name}>
-              {challenge.name}
-            </Text>
+            <Text style={styles.name}>{challenge.name}</Text>
             <Text style={styles.place}>
               {getUserPlace(user, challenge.users)} of {challenge.users.length}
             </Text>
@@ -184,11 +188,11 @@ class UserPlaceItem extends Component {
           <Text style={styles.userItemText}>
             {getUserPlace(user, tryme)}: {nameToShow}
           </Text>
-          {showTimeLeft
-            ? <Text style={styles.place}>
-                {_.capitalize(showTimeLeft.fromNow(true))} left
-              </Text>
-            : null}
+          {showTimeLeft ? (
+            <Text style={styles.place}>
+              {_.capitalize(showTimeLeft.fromNow(true))} left
+            </Text>
+          ) : null}
         </View>
       );
     } else {

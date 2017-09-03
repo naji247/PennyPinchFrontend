@@ -10,7 +10,7 @@ module.exports = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: colors.appWhite
   },

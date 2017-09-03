@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Button, StyleSheet, Text, Image, View, TextInput } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  Image,
+  View,
+  TextInput,
+  KeyboardAvoidingView
+} from "react-native";
 import { connect } from "react-redux";
 import * as styles from "./NewTransactionScreen.css";
 import { LoadingComponent } from "../UtilityComponents/LoadingComponents";
@@ -15,20 +23,23 @@ import {
   TransactionDescriptionInput
 } from "../CreateTransactions/CreateTransactions";
 import * as colors from "../../style/colors";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { logout } from "../../actions/authActions";
 
 class NewTransactionScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Add Transaction",
-      tabBarIcon: ({ tintColor }) =>
-        <Image source={require("./plus-06.png")} style={styles.icon} />,
+      tabBarIcon: ({ tintColor }) => (
+        <Image source={require("./plus-06.png")} style={styles.icon} />
+      ),
       headerStyle: styles.header,
       headerTitleStyle: styles.headerTitle,
       headerLeft: (
         <Button
           color={colors.appWhite}
-          title="Me"
-          onPress={() => navigation.navigate("Settings")}
+          title="Logout"
+          onPress={() => navigation.dispatch(logout())}
         />
       )
     };
@@ -44,24 +55,30 @@ class NewTransactionScreen extends Component {
       navigation
     } = this.props;
 
-    return transaction.isLoading
-      ? <LoadingComponent size="large" />
-      : <View style={styles.container}>
-          <TransactionAmountInput
-            transaction={transaction}
-            updateTransaction={updateTransaction}
-          />
-          <TransactionDescriptionInput
-            transaction={transaction}
-            updateTransaction={updateTransaction}
-          />
-          <TransactionSubmit
-            transaction={transaction}
-            user={user}
-            submitTransaction={submitTransaction}
-            navigation={navigation}
-          />
-        </View>;
+    return transaction.isLoading ? (
+      <LoadingComponent size="large" />
+    ) : (
+      <KeyboardAwareScrollView
+        viewIsInsideTabBar={true}
+        contentContainerStyle={styles.container}
+      >
+        <TransactionAmountInput
+          transaction={transaction}
+          updateTransaction={updateTransaction}
+        />
+        <View style={{ height: 40 }} />
+        <TransactionDescriptionInput
+          transaction={transaction}
+          updateTransaction={updateTransaction}
+        />
+        <TransactionSubmit
+          transaction={transaction}
+          user={user}
+          submitTransaction={submitTransaction}
+          navigation={navigation}
+        />
+      </KeyboardAwareScrollView>
+    );
   }
 }
 

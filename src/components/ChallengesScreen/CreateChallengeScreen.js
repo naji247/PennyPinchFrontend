@@ -20,6 +20,7 @@ import {
 import moment from "moment";
 import * as colors from "../../style/colors";
 import DatePicker from "react-native-datepicker";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 class CreateChallengeScreen extends Component {
   constructor() {
@@ -34,11 +35,15 @@ class CreateChallengeScreen extends Component {
     headerStyle: styles.header,
     headerTitleStyle: styles.headerTitle,
     headerLeft: (
-      <Button
-        color={colors.appWhite}
-        title="Back"
+      <TouchableHighlight
         onPress={() => navigation.dispatch(NavigationActions.back(null))}
-      />
+        underlayColor={colors.appCyan}
+      >
+        <Image
+          style={styles.backButton}
+          source={require("./backbutton-11.png")}
+        />
+      </TouchableHighlight>
     )
   });
 
@@ -55,14 +60,7 @@ class CreateChallengeScreen extends Component {
       user,
       submitChallenge
     } = this.props;
-    const selectedUsers = [
-      "Naseem Al-Naji",
-      "Derek Lou",
-      "Tom Updike",
-      "Jesse Lavendt",
-      "Larry Blyth",
-      "Kevin Ayling"
-    ];
+    const selectedUsers = challenge.users;
     const userPreview =
       selectedUsers.length > 5 ? selectedUsers.slice(0, 5) : selectedUsers;
     const overflowPreview =
@@ -70,7 +68,9 @@ class CreateChallengeScreen extends Component {
     return isLoading ? (
       <LoadingComponent size="large" />
     ) : (
-      <View style={styles.createChallengeContainer}>
+      <KeyboardAwareScrollView
+        contentContainerStyle={styles.createChallengeContainer}
+      >
         <ChallengeNameInput {...this.props} />
         <ChallengeDateInput field="start_date" {...this.props} />
         <ChallengeDateInput field="end_date" {...this.props} />
@@ -81,10 +81,20 @@ class CreateChallengeScreen extends Component {
           >
             Participants:
           </Text>
+          <Text
+            style={{
+              margin: 5,
+              marginLeft: 20,
+              fontSize: 15,
+              fontFamily: "HelveticaNeue"
+            }}
+          >
+            You
+          </Text>
           {userPreview.map((value, index) => {
             return (
               <Text style={styles.userPreview} key={index}>
-                {value}
+                {value.name}
               </Text>
             );
           })}
@@ -107,7 +117,7 @@ class CreateChallengeScreen extends Component {
             onPress={() => submitChallenge(user, challenge, navigation)}
             underlayColor={colors.appTransparentGreen}
           >
-            <View style={{ height: 50, justifyContent: "center" }}>
+            <View style={{ height: 70, justifyContent: "center" }}>
               <Text
                 style={{
                   textAlign: "center",
@@ -120,7 +130,7 @@ class CreateChallengeScreen extends Component {
             </View>
           </TouchableHighlight>
         </View>
-      </View>
+      </KeyboardAwareScrollView>
     );
   }
 }

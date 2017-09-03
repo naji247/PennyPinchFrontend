@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 import * as styles from "./CreateTransactions.css";
 import { updateTransactionAction } from "../../actions/transactionActions";
 
-const TransactionAmountInput = ({ transaction, updateTransaction }) =>
+const TransactionAmountInput = ({ transaction, updateTransaction }) => (
   <View style={styles.amountContainer}>
     <TextInput
       style={styles.amountInput}
@@ -23,9 +23,10 @@ const TransactionAmountInput = ({ transaction, updateTransaction }) =>
       value={transaction.amount}
       placeholderTextColor={colors.appDarkgrey}
     />
-  </View>;
+  </View>
+);
 
-const TransactionDescriptionInput = ({ transaction, updateTransaction }) =>
+const TransactionDescriptionInput = ({ transaction, updateTransaction }) => (
   <View style={styles.descriptionContainer}>
     <TextInput
       placeholder="Description..."
@@ -34,11 +35,13 @@ const TransactionDescriptionInput = ({ transaction, updateTransaction }) =>
         updateTransaction({ ...transaction, description: desc })}
       value={transaction.description}
       placeholderTextColor={colors.appDarkgrey}
-      multiline={true}
+      multiline={false}
+      autoCorrect={false}
     />
-  </View>;
+  </View>
+);
 
-const TransactionTypeSelect = ({ transaction, updateTransaction }) =>
+const TransactionTypeSelect = ({ transaction, updateTransaction }) => (
   <View style={styles.selectTypeContainer}>
     <Button
       onPress={() => updateTransaction({ ...transaction, isSpending: true })}
@@ -50,23 +53,25 @@ const TransactionTypeSelect = ({ transaction, updateTransaction }) =>
       title="Spent!"
       disabled={!transaction.isSpending}
     />
-  </View>;
+  </View>
+);
 
 const TransactionSubmit = ({
   transaction,
   user,
   submitTransaction,
   navigation
-}) =>
+}) => (
   <TouchableHighlight
     style={styles.selectTypeContainer}
     onPress={() => submitTransaction(user, transaction, navigation)}
-    underlayColor={colors.appCyan}
+    underlayColor={colors.appTransparentGreen}
   >
     <View style={styles.submitButton}>
       <Text style={styles.submitButtonText}>Submit!</Text>
     </View>
-  </TouchableHighlight>;
+  </TouchableHighlight>
+);
 
 module.exports = {
   TransactionAmountInput,

@@ -18,6 +18,12 @@ module.exports = StyleSheet.create({
   newChalNameContainer: {
     flexDirection: "row"
   },
+  backButton: {
+    width: 25,
+    height: 16,
+    margin: 3,
+    marginLeft: 6
+  },
   container: {
     flex: 1,
     padding: 10,

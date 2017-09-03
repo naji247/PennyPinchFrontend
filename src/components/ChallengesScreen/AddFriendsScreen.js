@@ -14,6 +14,7 @@ import { LoadingComponent } from "../UtilityComponents/LoadingComponents";
 import { NavigationActions } from "react-navigation";
 import { selectFriendAction } from "../../actions/challengeActions";
 import moment from "moment";
+import _ from "lodash";
 import * as colors from "../../style/colors";
 
 class AddFriendsScreen extends Component {
@@ -27,11 +28,15 @@ class AddFriendsScreen extends Component {
       <Image source={require("./trophy-05.png")} style={styles.icon} />
     ),
     headerLeft: (
-      <Button
-        color={colors.appWhite}
-        title="Back"
+      <TouchableHighlight
         onPress={() => navigation.dispatch(NavigationActions.back(null))}
-      />
+        underlayColor={colors.appCyan}
+      >
+        <Image
+          style={styles.backButton}
+          source={require("./backbutton-11.png")}
+        />
+      </TouchableHighlight>
     ),
     headerStyle: styles.header,
     headerTitleStyle: styles.headerTitle
@@ -56,6 +61,8 @@ class AddFriendsScreen extends Component {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
+    console.log("Best friends");
+    console.log(selectedFriends);
     if (friends.length === 0) {
       return (
         <View style={styles.friendScreen}>
@@ -99,7 +106,7 @@ class AddFriendsScreen extends Component {
             onPress={() => navigate("CreateChallengeScreen")}
             underlayColor={colors.appTransparentGreen}
           >
-            <View style={{ height: 50, justifyContent: "center" }}>
+            <View style={{ height: 70, justifyContent: "center" }}>
               <Text
                 style={{
                   textAlign: "center",
@@ -120,17 +127,17 @@ class AddFriendsScreen extends Component {
 class FriendRow extends Component {
   handleFriendClick() {
     const { selectFriend, friend, selectedFriends } = this.props;
-    const selected = selectedFriends.includes(friend.id);
+    const selected = _.some(selectedFriends, ["id", friend.id]);
     const newSelectedFriends = selected
-      ? selectedFriends.filter(item => item !== friend.id)
-      : selectedFriends.concat(friend.id);
+      ? selectedFriends.filter(item => item.id !== friend.id)
+      : selectedFriends.concat(friend);
 
     selectFriend(newSelectedFriends);
   }
 
   render() {
     const { friend, selectedFriends } = this.props;
-    const selected = selectedFriends.includes(friend.id);
+    const selected = _.some(selectedFriends, ["id", friend.id]);
     return (
       <TouchableHighlight
         onPress={() => this.handleFriendClick()}
