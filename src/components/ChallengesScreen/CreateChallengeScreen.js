@@ -20,6 +20,7 @@ import {
 import moment from "moment";
 import * as colors from "../../style/colors";
 import DatePicker from "react-native-datepicker";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 class CreateChallengeScreen extends Component {
   constructor() {
@@ -28,16 +29,21 @@ class CreateChallengeScreen extends Component {
 
   static navigationOptions = ({ navigation }) => ({
     title: "Challenges",
-    tabBarIcon: ({ tintColor }) =>
-      <Image source={require("./trophy-05.png")} style={styles.icon} />,
+    tabBarIcon: ({ tintColor }) => (
+      <Image source={require("./trophy-05.png")} style={styles.icon} />
+    ),
     headerStyle: styles.header,
     headerTitleStyle: styles.headerTitle,
     headerLeft: (
-      <Button
-        color={colors.appWhite}
-        title="Back"
+      <TouchableHighlight
         onPress={() => navigation.dispatch(NavigationActions.back(null))}
-      />
+        underlayColor={colors.appCyan}
+      >
+        <Image
+          style={styles.backButton}
+          source={require("./backbutton-11.png")}
+        />
+      </TouchableHighlight>
     )
   });
 
@@ -54,54 +60,109 @@ class CreateChallengeScreen extends Component {
       user,
       submitChallenge
     } = this.props;
-    console.log(this.props);
-    return isLoading
-      ? <LoadingComponent size="large" />
-      : <View style={styles.container}>
-          <ChallengeNameInput {...this.props} />
-          <ChallengeGoalInput {...this.props} />
-          <ChallengeDateInput field="start_date" {...this.props} />
-          <ChallengeDateInput field="end_date" {...this.props} />
-          <Button
-            title="Send!"
+    const selectedUsers = challenge.users;
+    const userPreview =
+      selectedUsers.length > 5 ? selectedUsers.slice(0, 5) : selectedUsers;
+    const overflowPreview =
+      selectedUsers.length > 5 ? selectedUsers.length - 5 : -1;
+    return isLoading ? (
+      <LoadingComponent size="large" />
+    ) : (
+      <KeyboardAwareScrollView
+        contentContainerStyle={styles.createChallengeContainer}
+      >
+        <ChallengeNameInput {...this.props} />
+        <ChallengeDateInput field="start_date" {...this.props} />
+        <ChallengeDateInput field="end_date" {...this.props} />
+        <ChallengeGoalInput {...this.props} />
+        <View style={{ flex: 7 }}>
+          <Text
+            style={{ margin: 10, fontSize: 20, fontFamily: "HelveticaNeue" }}
+          >
+            Participants:
+          </Text>
+          <Text
+            style={{
+              margin: 5,
+              marginLeft: 20,
+              fontSize: 15,
+              fontFamily: "HelveticaNeue"
+            }}
+          >
+            You
+          </Text>
+          {userPreview.map((value, index) => {
+            return (
+              <Text style={styles.userPreview} key={index}>
+                {value.name}
+              </Text>
+            );
+          })}
+          {overflowPreview == -1 ? null : (
+            <Text
+              style={{
+                margin: 5,
+                marginLeft: 20,
+                fontSize: 15,
+                fontFamily: "HelveticaNeue"
+              }}
+            >
+              and {overflowPreview} more
+            </Text>
+          )}
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <TouchableHighlight
+            style={{ flex: 1, backgroundColor: colors.appGreen }}
             onPress={() => submitChallenge(user, challenge, navigation)}
-          />
-        </View>;
+            underlayColor={colors.appTransparentGreen}
+          >
+            <View style={{ height: 70, justifyContent: "center" }}>
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontSize: 16,
+                  color: colors.appWhite
+                }}
+              >
+                Send
+              </Text>
+            </View>
+          </TouchableHighlight>
+        </View>
+      </KeyboardAwareScrollView>
+    );
   }
 }
 
-const ChallengeNameInput = ({ challenge, updateChallenge }) =>
+const ChallengeNameInput = ({ challenge, updateChallenge }) => (
   <View style={{ flex: 1, flexDirection: "row" }}>
-    <View style={{ flex: 1, flexDirection: "column" }}>
-      <View style={{ marginBottom: 5 }}>
-        <Text>Name:</Text>
-      </View>
-      <View style={{ flex: 1, flexDirection: "row" }}>
-        <TextInput
-          style={{ flex: 1, height: 40, borderWidth: 1 }}
-          onChangeText={name => updateChallenge({ ...challenge, name: name })}
-          value={challenge.name}
-        />
-      </View>
+    <View style={styles.createChallengeInput}>
+      <TextInput
+        style={{ flex: 1 }}
+        onChangeText={name => updateChallenge({ ...challenge, name: name })}
+        value={challenge.name}
+        placeholder="Challenge Name"
+      />
     </View>
-  </View>;
+  </View>
+);
 
-const ChallengeGoalInput = ({ challenge, updateChallenge }) =>
+const ChallengeGoalInput = ({ challenge, updateChallenge }) => (
   <View style={{ flex: 1, flexDirection: "row" }}>
     <View style={{ flex: 1, flexDirection: "column" }}>
-      <View style={{ marginBottom: 5 }}>
-        <Text>Goal:</Text>
-      </View>
-      <View style={{ flex: 1, flexDirection: "row" }}>
+      <View style={styles.createChallengeInput}>
         <TextInput
-          style={{ flex: 1, height: 40, borderWidth: 1 }}
+          style={{ flex: 1 }}
           onChangeText={goal => updateChallenge({ ...challenge, goal: goal })}
           keyboardType="numeric"
+          placeholder="Goal"
           value={challenge.goal}
         />
       </View>
     </View>
-  </View>;
+  </View>
+);
 
 class ChallengeDateInput extends Component {
   constructor() {
@@ -133,33 +194,34 @@ class ChallengeDateInput extends Component {
     var date = isStart ? challenge.start_date : challenge.end_date;
     var minDate = isStart
       ? moment().format("MMM. DD, YYYY")
-      : moment().add(1, "day").format("MMM. DD, YYYY");
+      : moment()
+          .add(1, "day")
+          .format("MMM. DD, YYYY");
     var maxDate = isStart
-      ? moment().add(1, "month").format("MMM. DD, YYYY")
-      : moment().add(2, "months").format("MMM. DD, YYYY");
+      ? moment()
+          .add(1, "month")
+          .format("MMM. DD, YYYY")
+      : moment()
+          .add(2, "months")
+          .format("MMM. DD, YYYY");
     return (
       <View style={{ flex: 1, flexDirection: "row" }}>
         <View style={{ flex: 1, flexDirection: "column" }}>
-          <View style={{ marginBottom: 5 }}>
-            <Text>
-              {isStart ? "Start Date:" : "End Date:"}
-            </Text>
-          </View>
           <View style={{ flex: 1, flexDirection: "row" }}>
             <DatePicker
-              style={{ flex: 1, height: 40, borderWidth: 1 }}
+              style={styles.createChallengeInput}
               date={date}
               mode="date"
               format="MMM. DD, YYYY"
-              placeholder="select date"
-              minDate={minDate}
-              maxDate={maxDate}
+              placeholder={isStart ? "Start Date" : "End Date"}
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               showIcon={false}
               customStyles={{
                 dateInput: {
-                  borderWidth: 0
+                  borderWidth: 0,
+                  alignItems: "flex-start",
+                  justifyContent: "center"
                 }
                 // ... You can check the source to find the other keys.
               }}

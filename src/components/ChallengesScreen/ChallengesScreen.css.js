@@ -4,7 +4,6 @@ import * as colors from "../../style/colors";
 module.exports = StyleSheet.create({
   friendScreen: {
     flex: 1,
-    padding: 10,
     flexDirection: "column",
     backgroundColor: colors.appWhite,
     justifyContent: "center"
@@ -19,6 +18,12 @@ module.exports = StyleSheet.create({
   newChalNameContainer: {
     flexDirection: "row"
   },
+  backButton: {
+    width: 25,
+    height: 16,
+    margin: 3,
+    marginLeft: 6
+  },
   container: {
     flex: 1,
     padding: 10,
@@ -26,7 +31,18 @@ module.exports = StyleSheet.create({
     alignItems: "flex-start",
     backgroundColor: colors.appWhite
   },
-
+  createChallengeContainer: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "flex-start",
+    backgroundColor: colors.appWhite
+  },
+  createChallengeInput: {
+    flex: 1,
+    justifyContent: "center",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.appDivider
+  },
   header: {
     backgroundColor: colors.appCyan
   },
@@ -34,7 +50,11 @@ module.exports = StyleSheet.create({
     color: colors.appWhite
   },
   progressRow: {
-    flexDirection: "row"
+    paddingBottom: 12,
+    paddingTop: 10,
+    flexDirection: "row",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.appDivider
   },
   progressContainer: {
     flex: 1,
@@ -42,6 +62,12 @@ module.exports = StyleSheet.create({
   },
   listView: {
     padding: 12,
+    backgroundColor: colors.appWhite,
+    flexDirection: "column",
+    alignItems: "flex-start"
+  },
+  showListView: {
+    paddingHorizontal: 12,
     backgroundColor: colors.appWhite,
     flexDirection: "column",
     alignItems: "flex-start"
@@ -56,6 +82,12 @@ module.exports = StyleSheet.create({
     fontSize: 15,
     fontFamily: "HelveticaNeue",
     marginRight: 40
+  },
+  userPreview: {
+    margin: 5,
+    marginLeft: 20,
+    fontSize: 15,
+    fontFamily: "HelveticaNeue"
   },
   icon: {
     width: 26,

@@ -1,6 +1,7 @@
 import * as types from "./actionTypes";
 import * as api from "../helpers/api";
 import { NavigationActions } from "react-navigation";
+import _ from "lodash";
 
 const selectFriendAction = selectedFriends => {
   return {
@@ -75,13 +76,17 @@ const submitChallenge = (dispatch, user, challenge, navigation) => {
     "Content-Type": "application/json"
   };
 
+  const participants = _.map(challenge.users, user => {
+    return user.id;
+  });
+
   const body = {
     name: challenge.name,
     start_date: new Date(challenge.start_date).toISOString(),
     end_date: new Date(challenge.end_date).toISOString(),
     goal: parseInt(challenge.goal),
     challenge_type: "sprint",
-    fbids: challenge.users.concat(user.id)
+    fbids: participants.concat(user.id)
   };
 
   var config = {

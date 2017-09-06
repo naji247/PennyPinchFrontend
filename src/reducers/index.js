@@ -157,9 +157,9 @@ const initialCreateChallengeState = {
   challenge: {
     name: "",
     users: [],
-    goal: "0",
-    start_date: Date.now().toString(),
-    end_date: Date.now().toString()
+    goal: "",
+    start_date: "",
+    end_date: ""
   },
   isLoading: false
 };
@@ -177,7 +177,11 @@ function newChal(state = initialCreateChallengeState, action) {
         challenge: action.challenge
       };
     case types.SUBMIT_CHALLENGE_SUCCESS:
-      return { ...state, isLoading: false };
+      return {
+        ...state,
+        isLoading: false,
+        challenge: initialCreateChallengeState.challenge
+      };
     case types.SUBMIT_CHALLENGE_FAILURE:
       return { ...state, isLoading: false };
     case types.SUBMIT_CHALLENGE_LOADING:

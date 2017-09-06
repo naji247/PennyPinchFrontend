@@ -3,6 +3,7 @@ import * as colors from "../../style/colors";
 
 module.exports = StyleSheet.create({
   amountContainer: {
+    paddingLeft: 12,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -13,12 +14,14 @@ module.exports = StyleSheet.create({
     padding: 10
   },
   descriptionContainer: {
-    flex: 8,
+    flex: 4,
     justifyContent: "flex-start",
     alignItems: "flex-start",
     backgroundColor: "#F5FCFF",
     flexDirection: "row",
-    padding: 10
+    alignItems: "center",
+    justifyContent: "center",
+    paddingLeft: 12
   },
 
   amountInput: {
@@ -30,12 +33,13 @@ module.exports = StyleSheet.create({
 
   descriptionInput: {
     flex: 1,
+    height: 60,
     backgroundColor: colors.appWhite,
     color: colors.appDarkgrey,
     fontSize: 20
   },
   selectTypeContainer: {
-    flex: 1,
+    height: 70,
     backgroundColor: colors.appGreen,
     flexDirection: "row",
     alignItems: "center",
