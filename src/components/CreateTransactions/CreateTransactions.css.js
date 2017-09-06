@@ -9,14 +9,16 @@ module.exports = StyleSheet.create({
     backgroundColor: "#F5FCFF",
     borderBottomColor: colors.appDarkgrey,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    flexDirection: "row"
+    flexDirection: "row",
+    padding: 10
   },
   descriptionContainer: {
     flex: 8,
     justifyContent: "flex-start",
     alignItems: "flex-start",
     backgroundColor: "#F5FCFF",
-    flexDirection: "row"
+    flexDirection: "row",
+    padding: 10
   },
 
   amountInput: {
@@ -27,7 +29,7 @@ module.exports = StyleSheet.create({
   },
 
   descriptionInput: {
-    flex: 4,
+    flex: 1,
     backgroundColor: colors.appWhite,
     color: colors.appDarkgrey,
     fontSize: 20

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ListView, Button } from "react-native";
+import { StyleSheet, Text, View, Image, ListView, Button } from "react-native";
 import { connect } from "react-redux";
 import * as styles from "./HistoryScreen.css";
 import { LoadingComponent } from "../UtilityComponents/LoadingComponents";
@@ -27,6 +27,8 @@ class HistoryScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "History",
+      tabBarIcon: ({ tintColor }) =>
+        <Image source={require("./openbook-09.png")} style={styles.icon} />,
       headerStyle: styles.header,
       headerTitleStyle: styles.headerTitle,
       headerLeft: (
@@ -73,13 +75,13 @@ class HistoryScreen extends Component {
                 renderHeader={() =>
                   <View
                     style={{
+                      flexDirection: "row",
                       borderBottomColor: colors.appDivider,
                       borderBottomWidth: StyleSheet.hairlineWidth
                     }}
                   >
                     <Text style={styles.listHeader}>
-                      This is what you spent money on in the past several
-                      days...
+                      How you spent money in the past several days...
                     </Text>
                   </View>}
               />}

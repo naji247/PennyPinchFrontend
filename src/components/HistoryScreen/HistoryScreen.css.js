@@ -3,26 +3,31 @@ import * as colors from "../../style/colors";
 module.exports = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 12,
+    paddingLeft: 25,
+    paddingRight: 25,
     flexDirection: "column",
-    alignItems: "flex-start",
+    justifyContent: "center",
     backgroundColor: colors.appWhite
   },
   header: {
     backgroundColor: colors.appCyan
   },
   headerTitle: {
-    color: colors.appWhite,
-    fontFamily: "HelveticaNeue"
+    color: colors.appWhite
+    // fontFamily: "HelveticaNeue"
+  },
+  icon: {
+    width: 26,
+    height: 26
   },
   listView: {
-    padding: 12,
+    padding: 0,
     flexDirection: "column",
     backgroundColor: colors.appWhite,
     alignItems: "flex-start"
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 15,
     textAlign: "center",
     margin: 10
   },
@@ -47,23 +52,25 @@ module.exports = StyleSheet.create({
   description: {
     flex: 4,
     color: colors.appDarkgrey,
-    fontSize: 20,
+    fontSize: 15,
     margin: 10,
-    fontFamily: "HelveticaNeue-Light"
+    fontFamily: "HelveticaNeue"
   },
   amount: {
     flex: 1,
     margin: 10,
     color: colors.appBlack,
-    fontSize: 20,
-    fontFamily: "HelveticaNeue",
+    fontSize: 15,
+    fontFamily: "HelveticaNeue-Medium",
     textAlign: "right"
   },
   listHeader: {
-    margin: 10,
-    fontSize: 18,
-    fontFamily: "HelveticaNeue",
-    marginRight: 100
+    margin: 5,
+    marginBottom: 25,
+    marginTop: 35,
+    fontSize: 15,
+    flex: 1,
+    fontFamily: "HelveticaNeue-Medium"
   },
   emptyContainer: {
     flex: 1,
