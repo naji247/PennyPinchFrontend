@@ -1,9 +1,9 @@
 import React, { StyleSheet } from "react-native";
-
+import { normalizePixels } from "../../style/normalizePixels";
 module.exports = StyleSheet.create({
   welcome: {
-    fontSize: 20,
+    fontSize: normalizePixels(20),
     textAlign: "center",
-    margin: 10
+    margin: normalizePixels(10)
   }
 });

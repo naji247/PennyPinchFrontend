@@ -17,6 +17,7 @@ import { selectFriendAction } from "../../actions/challengeActions";
 import { Bar } from "react-native-progress";
 import moment from "moment";
 import * as colors from "../../style/colors";
+import { normalizePixels } from "../../style/normalizePixels";
 
 class ChallengeShowScreen extends Component {
   constructor() {
@@ -31,11 +32,15 @@ class ChallengeShowScreen extends Component {
     headerStyle: styles.header,
     headerTitleStyle: styles.headerTitle,
     headerLeft: (
-      <Button
-        color={colors.appWhite}
-        title="Back"
+      <TouchableHighlight
         onPress={() => navigation.dispatch(NavigationActions.back(null))}
-      />
+        underlayColor={colors.appCyan}
+      >
+        <Image
+          style={styles.backButton}
+          source={require("./backbutton-11.png")}
+        />
+      </TouchableHighlight>
     )
   });
 
@@ -63,8 +68,8 @@ class LeaderBoard extends Component {
         <View>
           <Text
             style={{
-              marginVertical: 10,
-              fontSize: 20,
+              marginVertical: normalizePixels(10),
+              fontSize: normalizePixels(20),
               textAlign: "center",
               fontWeight: "bold",
               fontFamily: "HelveticaNeue"
@@ -75,18 +80,20 @@ class LeaderBoard extends Component {
 
           <Text
             style={{
-              marginBottom: 10,
+              marginBottom: normalizePixels(10),
               textAlign: "center",
-              fontFamily: "HelveticaNeue"
+              fontFamily: "HelveticaNeue",
+              fontSize: normalizePixels(15)
             }}
           >
             {_.capitalize(endDate.fromNow(true))} left
           </Text>
           <Text
             style={{
-              marginBottom: 20,
+              marginBottom: normalizePixels(20),
               textAlign: "center",
-              fontFamily: "HelveticaNeue"
+              fontFamily: "HelveticaNeue",
+              fontSize: normalizePixels(15)
             }}
           >
             Goal: ${challenge.goal}
@@ -103,8 +110,8 @@ class LeaderBoard extends Component {
               textAlign: "center",
               fontFamily: "HelveticaNeue",
               fontWeight: "bold",
-              fontSize: 16,
-              marginBottom: 5
+              fontSize: normalizePixels(20),
+              marginBottom: normalizePixels(5)
             }}
           >
             Leader Board
@@ -158,13 +165,28 @@ class ProgessRow extends Component {
         <View style={styles.progressContainer}>
           <View
             style={{
-              marginBottom: 10,
+              marginBottom: normalizePixels(10),
               flexDirection: "row",
-              marginVertical: 5
+              marginVertical: normalizePixels(5)
             }}
           >
-            <Text style={{ fontWeight: "bold", flex: 1 }}>{userPlace}</Text>
-            <Text style={{ flex: 7 }}>
+            <Text
+              style={{
+                fontWeight: "bold",
+                flex: 1,
+                fontFamily: "HelveticaNeue",
+                fontSize: normalizePixels(15)
+              }}
+            >
+              {userPlace}
+            </Text>
+            <Text
+              style={{
+                flex: 7,
+                fontFamily: "HelveticaNeue",
+                fontSize: normalizePixels(15)
+              }}
+            >
               {`${userProgress.first_name} ${userProgress.last_name}`}
             </Text>
           </View>
@@ -174,15 +196,21 @@ class ProgessRow extends Component {
                 progress={progress}
                 color={colors.appWhite}
                 unfilledColor={colors.appCyan}
-                height={8}
+                height={normalizePixels(8)}
                 borderColor={colors.appCyan}
-                borderWidth={3}
-                borderRadius={15}
+                borderWidth={normalizePixels(3)}
+                borderRadius={normalizePixels(15)}
                 width={null}
               />
             </View>
             <View style={{ flex: 1 }}>
-              <Text style={{ textAlign: "right" }}>
+              <Text
+                style={{
+                  textAlign: "right",
+                  fontFamily: "HelveticaNeue",
+                  fontSize: normalizePixels(15)
+                }}
+              >
                 {isNegative ? "-" : null}${Math.abs(goal - spent)}
               </Text>
             </View>

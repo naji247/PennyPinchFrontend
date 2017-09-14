@@ -1,12 +1,14 @@
 import React, { StyleSheet } from "react-native";
 import * as colors from "../../style/colors";
+import { normalizePixels } from "../../style/normalizePixels";
 
 module.exports = StyleSheet.create({
   header: {
     backgroundColor: colors.appCyan
   },
   headerTitle: {
-    color: colors.appWhite
+    color: colors.appWhite,
+    fontSize: normalizePixels(20)
   },
   container: {
     flex: 1,
@@ -15,9 +17,9 @@ module.exports = StyleSheet.create({
     backgroundColor: colors.appWhite
   },
   welcome: {
-    fontSize: 20,
+    fontSize: normalizePixels(20),
     textAlign: "center",
-    margin: 10
+    margin: normalizePixels(10)
   },
   icon: {
     height: 26,

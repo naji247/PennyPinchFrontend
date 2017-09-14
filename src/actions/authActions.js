@@ -8,7 +8,7 @@ import {
 import Expo from "expo";
 const getFBToken = Expo.Facebook.logInWithReadPermissionsAsync;
 const fbURL = "https://graph.facebook.com/";
-const serverURL = "http://localhost:4000/";
+import * as api from "../helpers/api";
 
 const loginAction = user => {
   return {
@@ -60,7 +60,7 @@ async function loginUser(user) {
     body: JSON.stringify(body)
   };
 
-  const longTokenResponse = await fetch(`${serverURL}auth/login`, config);
+  const longTokenResponse = await fetch(api.userAuthUrl(), config);
   const longToken = (await longTokenResponse.json()).access_token;
   return longToken;
 }

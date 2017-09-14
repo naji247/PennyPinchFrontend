@@ -1,5 +1,6 @@
 import React, { StyleSheet } from "react-native";
-
+import * as colors from "../../style/colors";
+import { normalizePixels } from "../../style/normalizePixels";
 module.exports = StyleSheet.create({
   container: {
     flex: 1,
@@ -14,37 +15,29 @@ module.exports = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
 
-    height: 30,
-    width: 175,
-    paddingLeft: 2,
+    height: normalizePixels(50),
+    marginHorizontal: normalizePixels(30),
+    paddingLeft: normalizePixels(2),
 
-    backgroundColor: "rgb(66,93,174)",
+    backgroundColor: "transparent",
     borderRadius: 3,
     borderWidth: 1,
-    borderColor: "rgb(66,93,174)",
-
-    shadowColor: "#000000",
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    shadowOffset: {
-      height: 1,
-      width: 0
-    }
+    borderColor: colors.appWhite
   },
   FBLoginButtonText: {
-    color: "white",
-    fontWeight: "600",
-    fontSize: 14.2
+    color: colors.appWhite,
+    fontFamily: "HelveticaNeue",
+    fontSize: normalizePixels(15)
   },
   FBLoginButtonTextLoggedIn: {
-    marginLeft: 5
+    marginLeft: normalizePixels(5)
   },
   FBLoginButtonTextLoggedOut: {
-    marginLeft: 18
+    marginLeft: normalizePixels(18)
   },
   FBLogo: {
     position: "absolute",
-    height: 14,
+    height: normalizePixels(14),
     width: 14,
     left: 7,
     top: 7

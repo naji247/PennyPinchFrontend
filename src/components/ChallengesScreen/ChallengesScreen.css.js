@@ -1,5 +1,6 @@
 import React, { StyleSheet } from "react-native";
 import * as colors from "../../style/colors";
+import { normalizePixels } from "../../style/normalizePixels";
 
 module.exports = StyleSheet.create({
   friendScreen: {
@@ -10,7 +11,7 @@ module.exports = StyleSheet.create({
   },
   newChalName: {
     flex: 1,
-    height: 40,
+    height: normalizePixels(40),
     borderColor: "gray",
     borderWidth: 1
   },
@@ -19,16 +20,16 @@ module.exports = StyleSheet.create({
     flexDirection: "row"
   },
   backButton: {
-    width: 25,
-    height: 16,
-    margin: 3,
-    marginLeft: 6
+    width: normalizePixels(25),
+    height: normalizePixels(16),
+    margin: normalizePixels(3),
+    marginLeft: normalizePixels(6)
   },
   container: {
     flex: 1,
-    padding: 10,
+    padding: normalizePixels(10),
     flexDirection: "column",
-    alignItems: "flex-start",
+    alignItems: "center",
     backgroundColor: colors.appWhite
   },
   createChallengeContainer: {
@@ -41,52 +42,58 @@ module.exports = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.appDivider
+    borderBottomColor: colors.appDivider,
+    paddingLeft: normalizePixels(15)
+  },
+  createChallengeInputText: {
+    flex: 1,
+    fontSize: normalizePixels(15),
+    fontFamily: "HelveticaNeue"
   },
   header: {
     backgroundColor: colors.appCyan
   },
   headerTitle: {
-    color: colors.appWhite
+    color: colors.appWhite,
+    fontSize: normalizePixels(20)
   },
   progressRow: {
-    paddingBottom: 12,
-    paddingTop: 10,
+    paddingBottom: normalizePixels(12),
+    paddingTop: normalizePixels(10),
     flexDirection: "row",
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: colors.appDivider
   },
   progressContainer: {
     flex: 1,
-    margin: 5
+    margin: normalizePixels(5)
   },
   listView: {
-    padding: 12,
+    padding: normalizePixels(12),
     backgroundColor: colors.appWhite,
-    flexDirection: "column",
-    alignItems: "flex-start"
+    flexDirection: "column"
   },
   showListView: {
-    paddingHorizontal: 12,
+    paddingHorizontal: normalizePixels(12),
     backgroundColor: colors.appWhite,
     flexDirection: "column",
     alignItems: "flex-start"
   },
   welcome: {
-    fontSize: 20,
+    fontSize: normalizePixels(20),
     textAlign: "center",
-    margin: 10
+    margin: normalizePixels(10)
   },
   listHeader: {
-    margin: 10,
-    fontSize: 15,
+    margin: normalizePixels(10),
+    fontSize: normalizePixels(15),
     fontFamily: "HelveticaNeue",
-    marginRight: 40
+    marginRight: normalizePixels(40)
   },
   userPreview: {
-    margin: 5,
-    marginLeft: 20,
-    fontSize: 15,
+    margin: normalizePixels(5),
+    marginLeft: normalizePixels(30),
+    fontSize: normalizePixels(15),
     fontFamily: "HelveticaNeue"
   },
   icon: {
@@ -94,20 +101,22 @@ module.exports = StyleSheet.create({
     height: 26
   },
   noFriends: {
-    textAlign: "center"
+    textAlign: "center",
+    fontSize: normalizePixels(15),
+    fontFamily: "HelveticaNeue"
   },
   activeFriendRow: {
     flexDirection: "row",
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: normalizePixels(10),
+    paddingBottom: normalizePixels(10),
     backgroundColor: colors.appCyan,
     borderBottomColor: colors.appDivider,
     borderBottomWidth: StyleSheet.hairlineWidth
   },
   friendRow: {
     flexDirection: "row",
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: normalizePixels(10),
+    paddingBottom: normalizePixels(10),
     borderBottomColor: colors.appDivider,
     borderBottomWidth: StyleSheet.hairlineWidth
   },
@@ -116,38 +125,38 @@ module.exports = StyleSheet.create({
     flexDirection: "row",
     borderBottomColor: colors.appDivider,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    paddingTop: 5,
-    paddingBottom: 5
+    paddingTop: normalizePixels(5),
+    paddingBottom: normalizePixels(5)
   },
 
   textContainer: {
     flex: 1,
     flexDirection: "row",
-    margin: 5
+    margin: normalizePixels(5)
   },
 
   selected: {
     flex: 1,
     color: colors.appBlack,
-    fontSize: 20,
+    fontSize: normalizePixels(20),
     fontFamily: "HelveticaNeue-Light"
   },
   activeFriendName: {
     flex: 1,
     color: colors.appWhite,
-    fontSize: 20,
+    fontSize: normalizePixels(15),
     fontFamily: "HelveticaNeue-Light"
   },
   friendName: {
     flex: 1,
     color: colors.appBlack,
-    fontSize: 20,
+    fontSize: normalizePixels(15),
     fontFamily: "HelveticaNeue-Light"
   },
   name: {
     flex: 4,
     color: colors.appBlack,
-    fontSize: 15,
+    fontSize: normalizePixels(15),
     fontFamily: "HelveticaNeue",
     fontWeight: "bold"
   },
@@ -155,12 +164,13 @@ module.exports = StyleSheet.create({
   place: {
     flex: 1,
     color: colors.appBlack,
-    fontSize: 13,
+    fontSize: normalizePixels(15),
     fontFamily: "HelveticaNeue",
     textAlign: "right"
   },
 
   userItemText: {
+    fontSize: normalizePixels(15),
     textAlign: "left",
     fontFamily: "HelveticaNeue-Thin"
   }

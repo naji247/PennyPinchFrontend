@@ -1,5 +1,6 @@
 import React from "react";
 import * as colors from "../../style/colors";
+import { normalizePixels } from "../../style/normalizePixels";
 import {
   TouchableHighlight,
   StyleSheet,
@@ -16,12 +17,11 @@ const TransactionAmountInput = ({ transaction, updateTransaction }) => (
   <View style={styles.amountContainer}>
     <TextInput
       style={styles.amountInput}
-      placeholder="Amount..."
+      placeholder="Amount"
       onChangeText={amount =>
         updateTransaction({ ...transaction, amount: amount })}
       keyboardType="numeric"
       value={transaction.amount}
-      placeholderTextColor={colors.appDarkgrey}
     />
   </View>
 );
@@ -29,12 +29,11 @@ const TransactionAmountInput = ({ transaction, updateTransaction }) => (
 const TransactionDescriptionInput = ({ transaction, updateTransaction }) => (
   <View style={styles.descriptionContainer}>
     <TextInput
-      placeholder="Description..."
+      placeholder="Description"
       style={styles.descriptionInput}
       onChangeText={desc =>
         updateTransaction({ ...transaction, description: desc })}
       value={transaction.description}
-      placeholderTextColor={colors.appDarkgrey}
       multiline={false}
       autoCorrect={false}
     />
@@ -68,7 +67,7 @@ const TransactionSubmit = ({
     underlayColor={colors.appTransparentGreen}
   >
     <View style={styles.submitButton}>
-      <Text style={styles.submitButtonText}>Submit!</Text>
+      <Text style={styles.submitButtonText}>Submit</Text>
     </View>
   </TouchableHighlight>
 );

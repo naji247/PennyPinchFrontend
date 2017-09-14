@@ -5,6 +5,7 @@ import NewTransactionScreen from "../components/NewTransactionScreen/NewTransact
 import HistoryScreen from "../components/HistoryScreen/HistoryScreen";
 import ChallengeNavigator from "./ChallengeNavigator";
 import * as colors from "../style/colors";
+import { normalizePixels } from "../style/normalizePixels";
 
 export const MainNavigator = TabNavigator(
   {
@@ -16,8 +17,10 @@ export const MainNavigator = TabNavigator(
     lazy: false,
     tabBarPosition: "bottom",
     tabBarOptions: {
-      style: { backgroundColor: colors.appBlack },
-      labelStyle: { color: colors.appWhite },
+      style: {
+        backgroundColor: colors.appBlack
+      },
+      labelStyle: { fontSize: normalizePixels(13), color: colors.appWhite },
       activeBackgroundColor: colors.appTransparentDarkgrey
     }
   }

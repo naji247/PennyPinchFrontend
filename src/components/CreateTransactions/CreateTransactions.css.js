@@ -1,45 +1,43 @@
 import React, { StyleSheet } from "react-native";
 import * as colors from "../../style/colors";
+import { normalizePixels } from "../../style/normalizePixels";
 
 module.exports = StyleSheet.create({
   amountContainer: {
-    paddingLeft: 12,
+    paddingLeft: normalizePixels(12),
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5FCFF",
-    borderBottomColor: colors.appDarkgrey,
+    backgroundColor: colors.appWhite,
+    borderBottomColor: colors.appDivider,
     borderBottomWidth: StyleSheet.hairlineWidth,
     flexDirection: "row",
-    padding: 10
+    padding: normalizePixels(10)
   },
   descriptionContainer: {
-    flex: 4,
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    backgroundColor: "#F5FCFF",
+    flex: 7,
+    backgroundColor: colors.appWhite,
+    marginTop: normalizePixels(10),
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingLeft: 12
+    paddingLeft: normalizePixels(12)
   },
 
   amountInput: {
     flex: 1,
     backgroundColor: colors.appWhite,
-    color: colors.appDarkgrey,
-    fontSize: 20
+    fontSize: normalizePixels(15),
+    fontFamily: "HelveticaNeue"
   },
 
   descriptionInput: {
     flex: 1,
-    height: 60,
+    height: normalizePixels(60),
     backgroundColor: colors.appWhite,
-    color: colors.appDarkgrey,
-    fontSize: 20
+    fontSize: normalizePixels(15),
+    fontFamily: "HelveticaNeue"
   },
   selectTypeContainer: {
-    height: 70,
+    height: normalizePixels(70),
     backgroundColor: colors.appGreen,
     flexDirection: "row",
     alignItems: "center",
@@ -52,6 +50,7 @@ module.exports = StyleSheet.create({
   },
   submitButtonText: {
     color: colors.appWhite,
-    fontSize: 20
+    fontSize: normalizePixels(15),
+    fontFamily: "HelveticaNeue"
   }
 });

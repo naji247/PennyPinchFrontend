@@ -16,6 +16,7 @@ import { selectFriendAction } from "../../actions/challengeActions";
 import moment from "moment";
 import _ from "lodash";
 import * as colors from "../../style/colors";
+import { normalizePixels } from "../../style/normalizePixels";
 
 class AddFriendsScreen extends Component {
   constructor() {
@@ -80,7 +81,7 @@ class AddFriendsScreen extends Component {
         <View
           style={{
             flex: 1,
-            padding: 10
+            padding: normalizePixels(10)
           }}
         >
           <View style={{ flex: 1, flexDirection: "row" }}>
@@ -106,11 +107,14 @@ class AddFriendsScreen extends Component {
             onPress={() => navigate("CreateChallengeScreen")}
             underlayColor={colors.appTransparentGreen}
           >
-            <View style={{ height: 70, justifyContent: "center" }}>
+            <View
+              style={{ height: normalizePixels(70), justifyContent: "center" }}
+            >
               <Text
                 style={{
                   textAlign: "center",
-                  fontSize: 16,
+                  fontSize: normalizePixels(15),
+                  fontFamily: "HelveticaNeue",
                   color: colors.appWhite
                 }}
               >

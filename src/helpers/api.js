@@ -1,5 +1,9 @@
 const server = "http://localhost:4000";
 
+export function userAuthUrl() {
+  return `${server}/auth/login`;
+}
+
 export function userHistoryUrl(userId) {
   return `${server}/users/${userId}/transactions`;
 }

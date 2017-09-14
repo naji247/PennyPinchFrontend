@@ -23,8 +23,10 @@ import {
   TransactionDescriptionInput
 } from "../CreateTransactions/CreateTransactions";
 import * as colors from "../../style/colors";
+import { normalizePixels } from "../../style/normalizePixels";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { logout } from "../../actions/authActions";
+import { LogoutButton } from "../UtilityComponents/LogoutButton";
 
 class NewTransactionScreen extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -35,13 +37,7 @@ class NewTransactionScreen extends Component {
       ),
       headerStyle: styles.header,
       headerTitleStyle: styles.headerTitle,
-      headerLeft: (
-        <Button
-          color={colors.appWhite}
-          title="Logout"
-          onPress={() => navigation.dispatch(logout())}
-        />
-      )
+      headerLeft: <LogoutButton navigation={navigation} />
     };
   };
 
@@ -58,15 +54,11 @@ class NewTransactionScreen extends Component {
     return transaction.isLoading ? (
       <LoadingComponent size="large" />
     ) : (
-      <KeyboardAwareScrollView
-        viewIsInsideTabBar={true}
-        contentContainerStyle={styles.container}
-      >
+      <KeyboardAwareScrollView contentContainerStyle={styles.container}>
         <TransactionAmountInput
           transaction={transaction}
           updateTransaction={updateTransaction}
         />
-        <View style={{ height: 40 }} />
         <TransactionDescriptionInput
           transaction={transaction}
           updateTransaction={updateTransaction}

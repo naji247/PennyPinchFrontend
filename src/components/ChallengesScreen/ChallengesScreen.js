@@ -11,10 +11,12 @@ import {
 import { connect } from "react-redux";
 import * as styles from "./ChallengesScreen.css";
 import { LoadingComponent } from "../UtilityComponents/LoadingComponents";
+import { LogoutButton } from "../UtilityComponents/LogoutButton";
 import { getChallenges, showChallenge } from "../../actions/challengeActions";
 import moment from "moment";
 import _ from "lodash";
 import * as colors from "../../style/colors";
+import { normalizePixels } from "../../style/normalizePixels";
 import { logout } from "../../actions/authActions";
 
 function getOrdinal(n) {
@@ -41,19 +43,13 @@ class ChallengesScreen extends Component {
       ),
       headerStyle: styles.header,
       headerTitleStyle: styles.headerTitle,
-      headerLeft: (
-        <Button
-          color={colors.appWhite}
-          title="Logout"
-          onPress={() => navigation.dispatch(logout())}
-        />
-      )
+      headerLeft: <LogoutButton navigation={navigation} />
     };
   };
 
   componentDidMount() {
     const { user, nav, getChallenges } = this.props;
-
+    console.log("mounted");
     getChallenges(user);
   }
 
@@ -81,8 +77,8 @@ class ChallengesScreen extends Component {
             flexDirection: "row",
             justifyContent: "center",
             backgroundColor: colors.appGreen,
-            marginHorizontal: 30,
-            marginTop: 10
+            marginHorizontal: normalizePixels(30),
+            marginTop: normalizePixels(10)
           }}
           underlayColor={colors.appTransparentGreen}
           onPress={() => navigate("AddFriendsScreen")}
@@ -92,7 +88,9 @@ class ChallengesScreen extends Component {
               flex: 1,
               textAlign: "center",
               color: colors.appWhite,
-              padding: 10
+              padding: normalizePixels(10),
+              fontSize: normalizePixels(15),
+              fontFamily: "HelveticaNeue"
             }}
           >
             Add a Challenge

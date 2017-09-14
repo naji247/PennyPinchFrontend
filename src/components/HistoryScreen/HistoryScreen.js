@@ -3,9 +3,11 @@ import { StyleSheet, Text, View, Image, ListView, Button } from "react-native";
 import { connect } from "react-redux";
 import * as styles from "./HistoryScreen.css";
 import { LoadingComponent } from "../UtilityComponents/LoadingComponents";
+import { LogoutButton } from "../UtilityComponents/LogoutButton";
 import { getHistory } from "../../actions/transactionActions";
 import moment from "moment";
 import * as colors from "../../style/colors";
+import { normalizePixels } from "../../style/normalizePixels";
 import { logout } from "../../actions/authActions";
 
 const EmptyHistory = ({ hello }) => (
@@ -29,67 +31,36 @@ class HistoryScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "History",
-      tabBarIcon: ({ tintColor }) =>
-        <Image source={require("./openbook-09.png")} style={styles.icon} />,
+      tabBarIcon: ({ tintColor }) => (
+        <Image source={require("./openbook-09.png")} style={styles.icon} />
+      ),
       headerStyle: styles.header,
       headerTitleStyle: styles.headerTitle,
-      headerLeft: (
-        <Button
-          color={colors.appWhite}
-          title="Logout"
-          onPress={() => navigation.dispatch(logout())}
-        />
-      )
+      headerLeft: <LogoutButton navigation={navigation} />
     };
   };
 
   componentDidMount() {
     const { user, getHistory, nav } = this.props;
+    console.log("mounted");
     getHistory(user);
   }
 
   componentWillUpdate(nextProps, nextState) {
     // return a boolean value
-    const { user, history, getHistory, nav } = this.props;
-    if (history.isDirty && !history.isLoading) {
+    const { user, isDirty, isLoading, getHistory, nav } = this.props;
+    if (isDirty && !isLoading) {
       getHistory(user);
     }
+    console.log("updating");
     return true;
   }
 
   render() {
-    const { transactions, isLoading } = this.props.history;
+    const { transactions, isLoading } = this.props;
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
-<<<<<<< HEAD
-    return isLoading
-      ? <LoadingComponent size="large" />
-      : <View style={styles.container}>
-          {transactions.length == 0
-            ? <EmptyHistory />
-            : <ListView
-                contentContainerStyle={styles.listView}
-                dataSource={ds.cloneWithRows(transactions)}
-                renderRow={rowData => <TransactionRow rowData={rowData} />}
-                pageSize={50}
-                initialListSize={50}
-                enableEmptySections={true}
-                renderHeader={() =>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      borderBottomColor: colors.appDivider,
-                      borderBottomWidth: StyleSheet.hairlineWidth
-                    }}
-                  >
-                    <Text style={styles.listHeader}>
-                      How you spent money in the past several days...
-                    </Text>
-                  </View>}
-              />}
-        </View>;
-=======
     return isLoading ? (
       <LoadingComponent size="large" />
     ) : (
@@ -104,15 +75,17 @@ class HistoryScreen extends Component {
             pageSize={50}
             initialListSize={50}
             enableEmptySections={true}
+            removeClippedSubviews={false}
             renderHeader={() => (
               <View
                 style={{
+                  flexDirection: "row",
                   borderBottomColor: colors.appDivider,
                   borderBottomWidth: StyleSheet.hairlineWidth
                 }}
               >
                 <Text style={styles.listHeader}>
-                  This is what you spent money on in the past several days...
+                  How you spent money in the past several days...
                 </Text>
               </View>
             )}
@@ -120,7 +93,6 @@ class HistoryScreen extends Component {
         )}
       </View>
     );
->>>>>>> 6695942484dac5a0a16cb04af54a3fcb63a394c7
   }
 }
 
@@ -136,9 +108,9 @@ const TransactionRow = ({ rowData }) => (
   </View>
 );
 const mapStateToProps = state => ({
-  history: state.hist,
   user: state.auth.user,
-  nav: state.nav
+  nav: state.nav,
+  ...state.hist
 });
 
 const mapDispatchToProps = dispatch => ({

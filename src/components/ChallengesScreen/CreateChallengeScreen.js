@@ -19,6 +19,7 @@ import {
 } from "../../actions/challengeActions";
 import moment from "moment";
 import * as colors from "../../style/colors";
+import { normalizePixels } from "../../style/normalizePixels";
 import DatePicker from "react-native-datepicker";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -77,20 +78,16 @@ class CreateChallengeScreen extends Component {
         <ChallengeGoalInput {...this.props} />
         <View style={{ flex: 7 }}>
           <Text
-            style={{ margin: 10, fontSize: 20, fontFamily: "HelveticaNeue" }}
-          >
-            Participants:
-          </Text>
-          <Text
             style={{
-              margin: 5,
-              marginLeft: 20,
-              fontSize: 15,
+              margin: normalizePixels(15),
+              fontSize: normalizePixels(15),
+              fontWeight: "bold",
               fontFamily: "HelveticaNeue"
             }}
           >
-            You
+            Participants:
           </Text>
+          <Text style={styles.userPreview}>You</Text>
           {userPreview.map((value, index) => {
             return (
               <Text style={styles.userPreview} key={index}>
@@ -101,9 +98,9 @@ class CreateChallengeScreen extends Component {
           {overflowPreview == -1 ? null : (
             <Text
               style={{
-                margin: 5,
-                marginLeft: 20,
-                fontSize: 15,
+                margin: normalizePixels(5),
+                marginLeft: normalizePixels(30),
+                fontSize: normalizePixels(15),
                 fontFamily: "HelveticaNeue"
               }}
             >
@@ -117,11 +114,14 @@ class CreateChallengeScreen extends Component {
             onPress={() => submitChallenge(user, challenge, navigation)}
             underlayColor={colors.appTransparentGreen}
           >
-            <View style={{ height: 70, justifyContent: "center" }}>
+            <View
+              style={{ height: normalizePixels(70), justifyContent: "center" }}
+            >
               <Text
                 style={{
                   textAlign: "center",
-                  fontSize: 16,
+                  fontSize: normalizePixels(15),
+                  fontFamily: "HelveticaNeue",
                   color: colors.appWhite
                 }}
               >
@@ -139,7 +139,7 @@ const ChallengeNameInput = ({ challenge, updateChallenge }) => (
   <View style={{ flex: 1, flexDirection: "row" }}>
     <View style={styles.createChallengeInput}>
       <TextInput
-        style={{ flex: 1 }}
+        style={styles.createChallengeInputText}
         onChangeText={name => updateChallenge({ ...challenge, name: name })}
         value={challenge.name}
         placeholder="Challenge Name"
@@ -153,7 +153,7 @@ const ChallengeGoalInput = ({ challenge, updateChallenge }) => (
     <View style={{ flex: 1, flexDirection: "column" }}>
       <View style={styles.createChallengeInput}>
         <TextInput
-          style={{ flex: 1 }}
+          style={styles.createChallengeInputText}
           onChangeText={goal => updateChallenge({ ...challenge, goal: goal })}
           keyboardType="numeric"
           placeholder="Goal"
@@ -175,13 +175,13 @@ class ChallengeDateInput extends Component {
 
   validStyle(date) {
     var wrongStyle = {
-      height: 40,
+      height: normalizePixels(40),
       borderColor: "gray",
       borderWidth: 1,
       backgroundColor: "red"
     };
     var rightStyle = {
-      height: 40,
+      height: normalizePixels(40),
       borderColor: "gray",
       borderWidth: 1
     };
@@ -222,7 +222,17 @@ class ChallengeDateInput extends Component {
                   borderWidth: 0,
                   alignItems: "flex-start",
                   justifyContent: "center"
+                },
+                dateText: {
+                  fontFamily: "HelveticaNeue",
+                  fontSize: normalizePixels(15),
+                  color: "black"
+                },
+                placeholderText: {
+                  fontFamily: "HelveticaNeue",
+                  fontSize: normalizePixels(15)
                 }
+
                 // ... You can check the source to find the other keys.
               }}
               onDateChange={date => {
