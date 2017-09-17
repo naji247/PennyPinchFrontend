@@ -102,7 +102,9 @@ const TransactionRow = ({ rowData }) => (
       <Text style={styles.date}>{moment(rowData.date).format("M/D/YY")}</Text>
       <View style={styles.textContainer}>
         <Text style={styles.description}>{rowData.description}</Text>
-        <Text style={styles.amount}>${-1 * parseFloat(rowData.amount)}</Text>
+        <Text style={styles.amount}>
+          ${(-1 * parseFloat(rowData.amount)).toFixed(2)}
+        </Text>
       </View>
     </View>
   </View>
